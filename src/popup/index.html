@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MonoTaskr</title>
   <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
   <div id="app">
-    <h1>MonoTaskr</h1>
-    <p>Focus timer coming soon.</p>
+    <header>
+      <h1>MonoTaskr</h1>
+    </header>
+
+    <main>
+      <div id="timer-display">25:00</div>
+
+      <div id="controls" class="controls-group">
+        <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
+        <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
+        <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+      </div>
+
+      <div id="actions" class="actions-group">
+        <button id="btn-start" class="primary-btn">Start Focus</button>
+        <button id="btn-stop" class="secondary-btn hidden">Stop</button>
+        <button id="btn-reset" class="danger-btn hidden">Reset</button>
+      </div>
+    </main>
   </div>
   <script type="module" src="./index.ts"></script>
 </body>
+
 </html>
