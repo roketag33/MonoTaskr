@@ -8,20 +8,20 @@ const currentHostname = window.location.hostname;
 const isBlocked = BLOCKED_DOMAINS.some(domain => currentHostname.includes(domain));
 
 if (isBlocked) {
-    console.log(`MonoTaskr: ${currentHostname} is in the block list.`);
-    initBlocking();
+  console.log(`MonoTaskr: ${currentHostname} is in the block list.`);
+  initBlocking();
 }
 
 function initBlocking() {
-    let overlay: HTMLElement | null = null;
+  let overlay: HTMLElement | null = null;
 
-    const createOverlay = () => {
-        const container = document.createElement('div');
-        container.id = 'monotaskr-overlay-container';
-        const shadow = container.attachShadow({ mode: 'closed' });
+  const createOverlay = () => {
+    const container = document.createElement('div');
+    container.id = 'monotaskr-overlay-container';
+    const shadow = container.attachShadow({ mode: 'closed' });
 
-        const style = document.createElement('style');
-        style.textContent = `
+    const style = document.createElement('style');
+    style.textContent = `
       :host {
         all: initial;
         position: fixed;
@@ -48,38 +48,44 @@ function initBlocking() {
       }
     `;
 
-        const content = document.createElement('div');
-        content.innerHTML = `
+    const content = document.createElement('div');
+    content.innerHTML = `
       <h1>Focus Mode Active</h1>
       <p>This site is blocked while the timer is running.</p>
       <p>Get back to your task!</p>
     `;
 
-        shadow.appendChild(style);
-        shadow.appendChild(content);
-        return container;
-    };
+    shadow.appendChild(style);
+    shadow.appendChild(content);
+    return container;
+  };
 
-    const updateBlocking = (state: TimerState) => {
-        if (state.status === TimerStatus.RUNNING) {
-            if (!overlay) {
-                overlay = createOverlay();
-                document.body.appendChild(overlay);
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            }
+  const updateBlocking = (state: TimerState) => {
+    if (state.status === TimerStatus.RUNNING) {
+      if (!overlay) {
+        overlay = createOverlay();
+        if (document.body) {
+          document.body.appendChild(overlay);
+          document.body.style.overflow = 'hidden';
         } else {
-            if (overlay) {
-                overlay.remove();
-                overlay = null;
-                document.body.style.overflow = '';
-            }
+          document.documentElement.appendChild(overlay);
+          document.documentElement.style.overflow = 'hidden';
         }
-    };
+      }
+    } else {
+      if (overlay) {
+        overlay.remove();
+        overlay = null;
+        if (document.body) document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
+    }
+  };
 
-    // Initial check
-    storage.getTimerState().then(updateBlocking);
+  // Initial check
+  storage.getTimerState().then(updateBlocking);
 
-    // Subscribe to changes
-    storage.onTimerStateChanged(updateBlocking);
+  // Subscribe to changes
+  storage.onTimerStateChanged(updateBlocking);
 }
 
