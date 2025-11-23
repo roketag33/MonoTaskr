@@ -1,7 +1,8 @@
-import { TimerState, DEFAULT_TIMER_STATE } from './types';
+import { TimerState, DEFAULT_TIMER_STATE, Session } from './types';
 
 const KEYS = {
-    TIMER_STATE: 'timer_state'
+    TIMER_STATE: 'timer_state',
+    SESSIONS: 'sessions'
 };
 
 export const storage = {
@@ -20,5 +21,20 @@ export const storage = {
                 callback(changes[KEYS.TIMER_STATE].newValue);
             }
         });
+    },
+
+    getSessions: async (): Promise<Session[]> => {
+        const result = await chrome.storage.local.get(KEYS.SESSIONS);
+        return result[KEYS.SESSIONS] || [];
+    },
+
+    saveSession: async (session: Session): Promise<void> => {
+        const sessions = await storage.getSessions();
+        sessions.unshift(session); // Add to beginning
+        // Keep only last 50 sessions
+        if (sessions.length > 50) {
+            sessions.pop();
+        }
+        await chrome.storage.local.set({ [KEYS.SESSIONS]: sessions });
     }
 };

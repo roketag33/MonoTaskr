@@ -9,6 +9,11 @@ const startBtn = document.getElementById('btn-start')!;
 const stopBtn = document.getElementById('btn-stop')!;
 const resetBtn = document.getElementById('btn-reset')!;
 const durationBtns = document.querySelectorAll('.duration-btn');
+const historyBtn = document.getElementById('btn-history')!;
+const backBtn = document.getElementById('btn-back')!;
+const historyView = document.getElementById('history-view')!;
+const historyList = document.getElementById('history-list')!;
+const timerControls = [document.getElementById('timer-display')!, document.getElementById('controls')!, document.getElementById('actions')!];
 
 let selectedDuration = 25;
 
@@ -69,26 +74,7 @@ durationBtns.forEach(btn => {
 startBtn.addEventListener('click', async () => {
     const state = await storage.getTimerState();
     if (state.status === TimerStatus.PAUSED) {
-        // Resume logic (technically start with remaining time, but for MVP we just re-send start or use a resume message)
-        // For simplicity in MVP, we just call start again with current duration or implement a RESUME message.
-        // Let's use START_TIMER but we need to handle resume in background or just send START.
-        // Actually, if paused, we should probably just send START_TIMER with the remaining duration?
-        // Better: let's add RESUME or just handle it.
-        // For now, let's just send START_TIMER with the original duration if IDLE, or just unpause.
-        // Wait, the background service has a pause() but no explicit resume().
-        // Let's assume calling start() again resets it? No.
-        // Let's fix this: We will send START_TIMER. The background service should handle it.
-        // If we are PAUSED, we want to resume.
-        // Let's send START_TIMER with the current selected duration if IDLE.
-        // If PAUSED, we need a RESUME action.
-        // Let's add RESUME to messaging or just use START.
-        // For MVP simplicity: If PAUSED, we send START_TIMER with the *remaining* time? No that's messy.
-        // Let's just send START_TIMER with the original duration for now to restart, OR add a RESUME message.
-        // I'll add a simple check here:
         if (state.status === TimerStatus.PAUSED) {
-            // We need a resume. Let's just call start again for now, it will reset.
-            // Ideally we want to resume.
-            // Let's send START_TIMER.
             sendMessage(MESSAGES.START_TIMER, { duration: selectedDuration });
         } else {
             sendMessage(MESSAGES.START_TIMER, { duration: selectedDuration });
@@ -104,6 +90,44 @@ stopBtn.addEventListener('click', () => {
 
 resetBtn.addEventListener('click', () => {
     sendMessage(MESSAGES.RESET_TIMER);
+});
+
+historyBtn.addEventListener('click', async () => {
+    // Hide timer controls
+    timerControls.forEach(el => el.classList.add('hidden'));
+    historyBtn.classList.add('hidden');
+
+    // Show history
+    historyView.classList.remove('hidden');
+
+    // Load data
+    const sessions = await storage.getSessions();
+    historyList.innerHTML = '';
+
+    if (sessions.length === 0) {
+        historyList.innerHTML = '<li class="history-item" style="justify-content: center; color: #999;">No sessions yet</li>';
+    } else {
+        sessions.forEach(session => {
+            const date = new Date(session.timestamp);
+            const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const li = document.createElement('li');
+            li.className = 'history-item';
+            li.innerHTML = `
+        <span class="history-date">${dateStr}</span>
+        <span class="history-duration">${session.duration}m</span>
+      `;
+            historyList.appendChild(li);
+        });
+    }
+});
+
+backBtn.addEventListener('click', () => {
+    historyView.classList.add('hidden');
+    timerControls.forEach(el => el.classList.remove('hidden'));
+    historyBtn.classList.remove('hidden');
+    // Re-update UI to ensure correct state visibility
+    storage.getTimerState().then(updateUI);
 });
 
 function sendMessage(type: string, payload?: any) {

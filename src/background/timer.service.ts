@@ -78,6 +78,16 @@ export class TimerService {
         this.state.status = TimerStatus.COMPLETED;
         this.state.remainingSeconds = 0;
         this.state.endTime = null;
+
+        // Save Session
+        await storage.saveSession({
+            id: Date.now().toString(),
+            startTime: this.state.startTime || Date.now(),
+            duration: this.state.duration,
+            completed: true,
+            timestamp: Date.now()
+        });
+
         await this.saveState();
         this.syncAlarm();
 
