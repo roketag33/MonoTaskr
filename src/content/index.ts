@@ -24,23 +24,28 @@ function initBlocking() {
     style.textContent = `
       :host {
         all: initial;
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #e74c3c; /* Angry Red */
+        width: 100%;
+        height: 100%;
         z-index: 2147483647;
+      }
+      .overlay {
+        width: 100%;
+        height: 100%;
+        background-color: #e74c3c; /* Angry Red */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Playful font */
+        font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
         color: white;
         text-align: center;
         user-select: none;
       }
-      .container {
+      .content {
         animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         transform: translate3d(0, 0, 0);
         backface-visibility: hidden;
@@ -70,12 +75,14 @@ function initBlocking() {
     `;
 
     const content = document.createElement('div');
-    content.className = 'container';
+    content.className = 'overlay';
     content.innerHTML = `
-      <div class="emoji">😠</div>
-      <h1>NON !</h1>
-      <p>Tu devrais être en train de travailler !</p>
-      <p>Ferme cet onglet tout de suite.</p>
+      <div class="content">
+        <div class="emoji">😠</div>
+        <h1>NON !</h1>
+        <p>Tu devrais être en train de travailler !</p>
+        <p>Ferme cet onglet tout de suite.</p>
+      </div>
     `;
 
     shadow.appendChild(style);
