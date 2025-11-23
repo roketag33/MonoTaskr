@@ -29,30 +29,53 @@ function initBlocking() {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #2c3e50;
-        z-index: 2147483647; /* Max z-index */
+        background-color: #e74c3c; /* Angry Red */
+        z-index: 2147483647;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Playful font */
         color: white;
+        text-align: center;
+        user-select: none;
+      }
+      .container {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
       }
       h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
+        font-size: 5rem;
+        margin: 0;
+        text-transform: uppercase;
+        text-shadow: 4px 4px 0px #c0392b;
+      }
+      .emoji {
+        font-size: 8rem;
+        margin-bottom: 2rem;
       }
       p {
-        font-size: 1.5rem;
-        opacity: 0.8;
+        font-size: 2rem;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+      @keyframes shake {
+        10%, 90% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+        40%, 60% { transform: translate3d(4px, 0, 0); }
       }
     `;
 
     const content = document.createElement('div');
+    content.className = 'container';
     content.innerHTML = `
-      <h1>Focus Mode Active</h1>
-      <p>This site is blocked while the timer is running.</p>
-      <p>Get back to your task!</p>
+      <div class="emoji">😠</div>
+      <h1>NON !</h1>
+      <p>Tu devrais être en train de travailler !</p>
+      <p>Ferme cet onglet tout de suite.</p>
     `;
 
     shadow.appendChild(style);
