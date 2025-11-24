@@ -1,16 +1,38 @@
 import { storage } from '../shared/storage';
 import { TimerStatus, TimerState } from '../shared/types';
-import { BLOCKED_DOMAINS } from '../shared/constants';
 
 console.log('MonoTaskr content script loaded.');
 
-const currentHostname = window.location.hostname;
-const isBlocked = BLOCKED_DOMAINS.some(domain => currentHostname.includes(domain));
+let currentBlockedSites: string[] = [];
+let isCurrentSiteBlocked = false;
 
-if (isBlocked) {
-  console.log(`MonoTaskr: ${currentHostname} is in the block list.`);
-  initBlocking();
-}
+// Initialize with blocked sites from storage
+(async () => {
+  currentBlockedSites = await storage.getBlockedSites();
+  const currentHostname = window.location.hostname;
+  isCurrentSiteBlocked = currentBlockedSites.some(domain => currentHostname.includes(domain));
+
+  if (isCurrentSiteBlocked) {
+    console.log(`MonoTaskr: ${currentHostname} is in the block list.`);
+    initBlocking();
+  }
+
+  // Listen for changes to blocked sites
+  storage.onBlockedSitesChanged((newSites) => {
+    currentBlockedSites = newSites;
+    const wasBlocked = isCurrentSiteBlocked;
+    isCurrentSiteBlocked = currentBlockedSites.some(domain => currentHostname.includes(domain));
+
+    // If blocking status changed, reinitialize or remove blocking
+    if (isCurrentSiteBlocked && !wasBlocked) {
+      initBlocking();
+    } else if (!isCurrentSiteBlocked && wasBlocked) {
+      // Remove overlay if site was unblocked
+      const container = document.getElementById('monotaskr-overlay-container');
+      if (container) container.remove();
+    }
+  });
+})();
 
 function initBlocking() {
   let overlay: HTMLElement | null = null;

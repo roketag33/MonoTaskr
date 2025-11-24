@@ -1,4 +1,4 @@
-export const BLOCKED_DOMAINS = [
+export const DEFAULT_BLOCKED_DOMAINS = [
     'youtube.com',
     'www.youtube.com',
     'facebook.com',

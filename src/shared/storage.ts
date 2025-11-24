@@ -1,12 +1,31 @@
 import { TimerState, DEFAULT_TIMER_STATE, Session } from './types';
+import { DEFAULT_BLOCKED_DOMAINS } from './constants';
 
 const KEYS = {
     TIMER_STATE: 'timer_state',
     SESSIONS: 'sessions',
-    ONBOARDING_COMPLETED: 'onboarding_completed'
+    ONBOARDING_COMPLETED: 'onboarding_completed',
+    BLOCKED_SITES: 'blocked_sites'
 };
 
 export const storage = {
+    getBlockedSites: async (): Promise<string[]> => {
+        const result = await chrome.storage.local.get(KEYS.BLOCKED_SITES);
+        return result[KEYS.BLOCKED_SITES] || DEFAULT_BLOCKED_DOMAINS;
+    },
+
+    setBlockedSites: async (sites: string[]): Promise<void> => {
+        await chrome.storage.local.set({ [KEYS.BLOCKED_SITES]: sites });
+    },
+
+    onBlockedSitesChanged: (callback: (newSites: string[]) => void) => {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && changes[KEYS.BLOCKED_SITES]) {
+                callback(changes[KEYS.BLOCKED_SITES].newValue);
+            }
+        });
+    },
+
     getOnboardingCompleted: async (): Promise<boolean> => {
         const result = await chrome.storage.local.get(KEYS.ONBOARDING_COMPLETED);
         return !!result[KEYS.ONBOARDING_COMPLETED];

@@ -15,6 +15,15 @@ const historyView = document.getElementById('history-view')!;
 const historyList = document.getElementById('history-list')!;
 const timerControls = [document.getElementById('timer-display')!, document.getElementById('controls')!, document.getElementById('actions')!];
 
+// Settings Elements
+const settingsBtn = document.getElementById('btn-settings')!;
+const settingsView = document.getElementById('settings-view')!;
+const siteInput = document.getElementById('site-input')! as HTMLInputElement;
+const addSiteBtn = document.getElementById('btn-add-site')!;
+const sitesList = document.getElementById('sites-list')!;
+const resetSitesBtn = document.getElementById('btn-reset-sites')!;
+const backSettingsBtn = document.getElementById('btn-back-settings')!;
+
 let selectedDuration = 25;
 
 // Format time MM:SS
@@ -148,6 +157,81 @@ backBtn.addEventListener('click', () => {
 function sendMessage(type: string, payload?: any) {
     chrome.runtime.sendMessage({ type, payload });
 }
+
+// Settings Functions
+async function renderSitesList() {
+    const sites = await storage.getBlockedSites();
+    sitesList.innerHTML = '';
+
+    sites.forEach(site => {
+        const li = document.createElement('li');
+        li.className = 'site-item';
+        li.innerHTML = `
+            <span>${site}</span>
+            <button class="btn-remove-site" data-site="${site}">🗑️</button>
+        `;
+        sitesList.appendChild(li);
+    });
+
+    // Add remove listeners
+    document.querySelectorAll('.btn-remove-site').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const siteToRemove = (e.currentTarget as HTMLElement).getAttribute('data-site')!;
+            const sites = await storage.getBlockedSites();
+            const newSites = sites.filter(s => s !== siteToRemove);
+            await storage.setBlockedSites(newSites);
+            renderSitesList();
+        });
+    });
+}
+
+settingsBtn.addEventListener('click', async () => {
+    // Hide timer controls
+    timerControls.forEach(el => el.classList.add('hidden'));
+    historyBtn.classList.add('hidden');
+    settingsBtn.classList.add('hidden');
+
+    // Show settings
+    settingsView.classList.remove('hidden');
+
+    // Render sites
+    await renderSitesList();
+});
+
+addSiteBtn.addEventListener('click', async () => {
+    const newSite = siteInput.value.trim().toLowerCase();
+    if (!newSite) return;
+
+    const sites = await storage.getBlockedSites();
+    if (!sites.includes(newSite)) {
+        sites.push(newSite);
+        await storage.setBlockedSites(sites);
+        siteInput.value = '';
+        await renderSitesList();
+    }
+});
+
+siteInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addSiteBtn.click();
+    }
+});
+
+resetSitesBtn.addEventListener('click', async () => {
+    if (confirm('Reset to default blocked sites?')) {
+        const { DEFAULT_BLOCKED_DOMAINS } = await import('../shared/constants');
+        await storage.setBlockedSites(DEFAULT_BLOCKED_DOMAINS);
+        await renderSitesList();
+    }
+});
+
+backSettingsBtn.addEventListener('click', () => {
+    settingsView.classList.add('hidden');
+    timerControls.forEach(el => el.classList.remove('hidden'));
+    historyBtn.classList.remove('hidden');
+    settingsBtn.classList.remove('hidden');
+    storage.getTimerState().then(updateUI);
+});
 
 // Onboarding Elements
 const onboardingView = document.getElementById('onboarding-view')!;
