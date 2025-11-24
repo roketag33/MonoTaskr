@@ -102,6 +102,21 @@ historyBtn.addEventListener('click', async () => {
 
     // Load data
     const sessions = await storage.getSessions();
+    const stats = await storage.getDailyStats();
+
+    // Update stats
+    const statsContainer = document.getElementById('daily-stats')!;
+    statsContainer.innerHTML = `
+        <div class="stat-box">
+            <span class="stat-value">${stats.count}</span>
+            <span class="stat-label">Sessions today</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-value">${stats.totalMinutes}</span>
+            <span class="stat-label">Minutes focus</span>
+        </div>
+    `;
+
     historyList.innerHTML = '';
 
     if (sessions.length === 0) {

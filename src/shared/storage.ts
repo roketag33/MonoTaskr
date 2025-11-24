@@ -36,5 +36,23 @@ export const storage = {
             sessions.pop();
         }
         await chrome.storage.local.set({ [KEYS.SESSIONS]: sessions });
+    },
+
+    getDailyStats: async (): Promise<{ count: number; totalMinutes: number }> => {
+        const sessions = await storage.getSessions();
+        const today = new Date().toDateString();
+
+        const todaySessions = sessions.filter(session =>
+            new Date(session.timestamp).toDateString() === today
+        );
+
+        const totalMinutes = todaySessions.reduce((acc, session) => {
+            return acc + Math.round(session.duration / 60);
+        }, 0);
+
+        return {
+            count: todaySessions.length,
+            totalMinutes
+        };
     }
 };

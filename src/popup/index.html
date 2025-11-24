@@ -17,48 +17,32 @@
     <main>
       <div id="timer-display">25:00</div>
 
-      <!DOCTYPE html>
-      <html lang="en">
+      <div id="controls" class="controls-group">
+        <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
+        <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
+        <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+      </div>
 
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MonoTaskr</title>
-        <link rel="stylesheet" href="./index.css">
-      </head>
+      <div id="actions" class="actions-group">
+        <button id="btn-start" class="primary-btn">Start Focus</button>
+        <button id="btn-stop" class="secondary-btn hidden">Stop</button>
+        <button id="btn-reset" class="danger-btn hidden">Reset</button>
+      </div>
 
-      <body>
-        <div id="app">
-          <header>
-            <h1>MonoTaskr</h1>
-          </header>
-
-          <main>
-            <div id="timer-display">25:00</div>
-
-            <div id="controls" class="controls-group">
-              <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
-              <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
-              <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
-            </div>
-
-            <div id="actions" class="actions-group">
-              <button id="btn-start" class="primary-btn">Start Focus</button>
-              <button id="btn-stop" class="secondary-btn hidden">Stop</button>
-              <button id="btn-reset" class="danger-btn hidden">Reset</button>
-            </div>
-
-            <div id="history-view" class="hidden">
-              <h2>History</h2>
-              <ul id="history-list"></ul>
-              <button id="btn-back" class="secondary-btn">Back</button>
-            </div>
-
-            <button id="btn-history" class="text-btn">View History</button>
-          </main>
-
+      <div id="history-view" class="hidden">
+        <h2>History</h2>
+        <div id="daily-stats" class="stats-container">
+          <!-- Stats will be injected here -->
         </div>
-        <script type="module" src="./index.ts"></script>
-      </body>
+        <ul id="history-list"></ul>
+        <button id="btn-back" class="secondary-btn">Back</button>
+      </div>
 
-      </html>
+      <button id="btn-history" class="text-btn">View History</button>
+    </main>
+
+  </div>
+  <script type="module" src="./index.ts"></script>
+</body>
+
+</html>
