@@ -149,8 +149,70 @@ function sendMessage(type: string, payload?: any) {
     chrome.runtime.sendMessage({ type, payload });
 }
 
+// Onboarding Elements
+const onboardingView = document.getElementById('onboarding-view')!;
+const appView = document.getElementById('app')!;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const nextBtn = document.getElementById('btn-next')!;
+const skipBtn = document.getElementById('btn-skip')!;
+const startOnboardingBtn = document.getElementById('btn-start-onboarding')!;
+
+let currentSlide = 1;
+const totalSlides = 3;
+
+function updateSlides() {
+    slides.forEach(slide => {
+        slide.classList.remove('active');
+        if (parseInt(slide.getAttribute('data-slide') || '0') === currentSlide) {
+            slide.classList.add('active');
+        }
+    });
+
+    dots.forEach(dot => {
+        dot.classList.remove('active');
+        if (parseInt(dot.getAttribute('data-slide') || '0') === currentSlide) {
+            dot.classList.add('active');
+        }
+    });
+
+    if (currentSlide === totalSlides) {
+        nextBtn.classList.add('hidden');
+        startOnboardingBtn.classList.remove('hidden');
+    } else {
+        nextBtn.classList.remove('hidden');
+        startOnboardingBtn.classList.add('hidden');
+    }
+}
+
+nextBtn.addEventListener('click', () => {
+    if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlides();
+    }
+});
+
+async function completeOnboarding() {
+    await storage.setOnboardingCompleted(true);
+    onboardingView.classList.add('hidden');
+    appView.classList.remove('hidden');
+}
+
+skipBtn.addEventListener('click', completeOnboarding);
+startOnboardingBtn.addEventListener('click', completeOnboarding);
+
 // Init
 (async () => {
+    const onboardingCompleted = await storage.getOnboardingCompleted();
+
+    if (!onboardingCompleted) {
+        onboardingView.classList.remove('hidden');
+        appView.classList.add('hidden');
+    } else {
+        onboardingView.classList.add('hidden');
+        appView.classList.remove('hidden');
+    }
+
     const state = await storage.getTimerState();
     updateUI(state);
     storage.onTimerStateChanged(updateUI);

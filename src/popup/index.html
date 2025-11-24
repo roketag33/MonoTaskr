@@ -9,7 +9,43 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="onboarding-view" class="hidden">
+    <div class="slide active" data-slide="1">
+      <h2>Welcome to MonoTaskr</h2>
+      <p>Focus on what matters. We help you stay in the zone by blocking distractions.</p>
+      <div class="illustration">🎯</div>
+    </div>
+    <div class="slide" data-slide="2">
+      <h2>Block Distractions</h2>
+      <p>We block sites like YouTube, Facebook, and Reddit while you focus.</p>
+      <ul class="blocked-list">
+        <li>📺 YouTube</li>
+        <li>📘 Facebook</li>
+        <li>🐦 Twitter</li>
+        <li>📸 Instagram</li>
+      </ul>
+    </div>
+    <div class="slide" data-slide="3">
+      <h2>Ready to Focus?</h2>
+      <p>Start your first 25-minute session now and see the difference.</p>
+      <div class="illustration">🚀</div>
+    </div>
+
+    <div class="onboarding-controls">
+      <div class="dots">
+        <span class="dot active" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
+        <span class="dot" data-slide="3"></span>
+      </div>
+      <div class="buttons">
+        <button id="btn-skip" class="text-btn">Skip</button>
+        <button id="btn-next" class="primary-btn">Next</button>
+        <button id="btn-start-onboarding" class="primary-btn hidden">Start Focus</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
     <header>
       <h1>MonoTaskr</h1>
     </header>

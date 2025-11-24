@@ -2,10 +2,20 @@ import { TimerState, DEFAULT_TIMER_STATE, Session } from './types';
 
 const KEYS = {
     TIMER_STATE: 'timer_state',
-    SESSIONS: 'sessions'
+    SESSIONS: 'sessions',
+    ONBOARDING_COMPLETED: 'onboarding_completed'
 };
 
 export const storage = {
+    getOnboardingCompleted: async (): Promise<boolean> => {
+        const result = await chrome.storage.local.get(KEYS.ONBOARDING_COMPLETED);
+        return !!result[KEYS.ONBOARDING_COMPLETED];
+    },
+
+    setOnboardingCompleted: async (value: boolean): Promise<void> => {
+        await chrome.storage.local.set({ [KEYS.ONBOARDING_COMPLETED]: value });
+    },
+
     getTimerState: async (): Promise<TimerState> => {
         const result = await chrome.storage.local.get(KEYS.TIMER_STATE);
         return result[KEYS.TIMER_STATE] || DEFAULT_TIMER_STATE;
