@@ -17,7 +17,7 @@ MonoTaskr helps you stay productive by blocking distracting websites during focu
 Choose from pre-set durations (25, 45, or 60 minutes) and start your focus session with one click. Pause or reset anytime.
 
 **🚫 Smart Site Blocking**
-Automatically blocks popular time-wasters like YouTube, Facebook, Twitter, Instagram, Reddit, and Netflix while you work. No willpower needed.
+Automatically blocks distracting websites while you work. You can easily customize this list in the settings. No willpower needed.
 
 **📊 Track Your Progress**
 See your daily statistics including session count and total focus time. Review your complete session history to track improvements.
@@ -66,18 +66,6 @@ Start focusing today with MonoTaskr!
 
 ## Language
 **English**
-
-## Tags/Keywords
-- productivity
-- focus
-- timer
-- pomodoro
-- website blocker
-- distraction blocker
-- work timer
-- study timer
-- time management
-- concentration
 
 ## Privacy Practices
 
