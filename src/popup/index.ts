@@ -165,13 +165,53 @@ function sendMessage(type: string, payload?: any) {
 }
 
 // Settings Functions
+import { BlockingMode } from '../shared/types';
+import { DEFAULT_WHITELISTED_DOMAINS, DEFAULT_BLOCKED_DOMAINS } from '../shared/constants';
+
+// ... (existing imports)
+
+// Settings Elements (additions)
+const modeRadios = document.querySelectorAll('input[name="blocking-mode"]');
+const sitesListTitle = document.getElementById('sites-list-title')!;
+
+// ... (existing constants)
+
+// Helper to get current sites based on mode
+async function getSites(mode: BlockingMode): Promise<string[]> {
+    return mode === BlockingMode.BLACKLIST
+        ? await storage.getBlockedSites()
+        : await storage.getWhitelistedSites();
+}
+
+async function saveSites(mode: BlockingMode, sites: string[]) {
+    if (mode === BlockingMode.BLACKLIST) {
+        await storage.setBlockedSites(sites);
+    } else {
+        await storage.setWhitelistedSites(sites);
+    }
+}
+
 async function renderSitesList() {
-    const sites = await storage.getBlockedSites();
+    // Get current mode
+    const mode = (document.querySelector('input[name="blocking-mode"]:checked') as HTMLInputElement).value as BlockingMode;
+    const sites = await getSites(mode);
+
+    // Update title
+    sitesListTitle.textContent = mode === BlockingMode.BLACKLIST ? 'Blocked Sites' : 'Whitelisted Sites';
+
     sitesList.innerHTML = '';
+
+    // Show empty state if needed
+    if (sites.length === 0) {
+        sitesList.innerHTML = `<li class="site-item" style="justify-content:center; color:#888; font-style:italic;">
+            ${mode === BlockingMode.BLACKLIST ? 'No blocked sites' : 'No whitelisted sites'}
+        </li>`;
+    }
 
     sites.forEach(site => {
         const li = document.createElement('li');
         li.className = 'site-item';
+        // Add visual indicator or just text
         li.innerHTML = `
             <span>${site}</span>
             <button class="btn-remove-site" data-site="${site}">🗑️</button>
@@ -183,13 +223,23 @@ async function renderSitesList() {
     document.querySelectorAll('.btn-remove-site').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const siteToRemove = (e.currentTarget as HTMLElement).getAttribute('data-site')!;
-            const sites = await storage.getBlockedSites();
+            const currentMode = (document.querySelector('input[name="blocking-mode"]:checked') as HTMLInputElement).value as BlockingMode;
+            const sites = await getSites(currentMode);
             const newSites = sites.filter(s => s !== siteToRemove);
-            await storage.setBlockedSites(newSites);
+            await saveSites(currentMode, newSites);
             renderSitesList();
         });
     });
 }
+
+// Mode switching
+modeRadios.forEach(radio => {
+    radio.addEventListener('change', async (e) => {
+        const newMode = (e.target as HTMLInputElement).value as BlockingMode;
+        await storage.setBlockingMode(newMode);
+        await renderSitesList();
+    });
+});
 
 settingsBtn.addEventListener('click', async () => {
     // Hide timer controls
@@ -204,18 +254,47 @@ settingsBtn.addEventListener('click', async () => {
     const showTabTitle = await storage.getShowTabTitleTimer();
     settingTabTitle.checked = showTabTitle;
 
+    // Load mode
+    const mode = await storage.getBlockingMode();
+    // Check request radio
+    const radio = document.querySelector(`input[name="blocking-mode"][value="${mode}"]`) as HTMLInputElement;
+    if (radio) radio.checked = true;
+
     // Render sites
     await renderSitesList();
 });
 
+// Helper to extract domain from URL or string
+function extractDomain(input: string): string | null {
+    if (!input) return null;
+    let domain = input.trim().toLowerCase();
+
+    // Add protocol if missing to parse correctly with URL
+    if (!domain.startsWith('http://') && !domain.startsWith('https://')) {
+        domain = 'http://' + domain;
+    }
+
+    try {
+        const url = new URL(domain);
+        return url.hostname;
+    } catch (e) {
+        // Fallback for simple domain-like strings that URL class might reject
+        return input.trim().toLowerCase();
+    }
+}
+
 addSiteBtn.addEventListener('click', async () => {
-    const newSite = siteInput.value.trim().toLowerCase();
+    const rawInput = siteInput.value;
+    const newSite = extractDomain(rawInput);
+
     if (!newSite) return;
 
-    const sites = await storage.getBlockedSites();
+    const mode = (document.querySelector('input[name="blocking-mode"]:checked') as HTMLInputElement).value as BlockingMode;
+    const sites = await getSites(mode);
+
     if (!sites.includes(newSite)) {
         sites.push(newSite);
-        await storage.setBlockedSites(sites);
+        await saveSites(mode, sites);
         siteInput.value = '';
         await renderSitesList();
     }
@@ -228,9 +307,17 @@ siteInput.addEventListener('keypress', (e) => {
 });
 
 resetSitesBtn.addEventListener('click', async () => {
-    if (confirm('Reset to default blocked sites?')) {
-        const { DEFAULT_BLOCKED_DOMAINS } = await import('../shared/constants');
-        await storage.setBlockedSites(DEFAULT_BLOCKED_DOMAINS);
+    const mode = (document.querySelector('input[name="blocking-mode"]:checked') as HTMLInputElement).value as BlockingMode;
+    const msg = mode === BlockingMode.BLACKLIST
+        ? 'Reset to default blocked sites?'
+        : 'Clear whitelist?';
+
+    if (confirm(msg)) {
+        if (mode === BlockingMode.BLACKLIST) {
+            await storage.setBlockedSites(DEFAULT_BLOCKED_DOMAINS);
+        } else {
+            await storage.setWhitelistedSites(DEFAULT_WHITELISTED_DOMAINS);
+        }
         await renderSitesList();
     }
 });

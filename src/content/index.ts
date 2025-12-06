@@ -1,38 +1,44 @@
 import { storage } from '../shared/storage';
-import { TimerStatus, TimerState } from '../shared/types';
+import { TimerStatus, TimerState, BlockingMode } from '../shared/types';
 
 console.log('MonoTaskr content script loaded.');
 
+// Settings state
 let currentBlockedSites: string[] = [];
-let isCurrentSiteBlocked = false;
+let currentWhitelistedSites: string[] = [];
+let currentBlockingMode: BlockingMode = BlockingMode.BLACKLIST;
+let shouldBeBlocked = false;
 
-// Initialize with blocked sites from storage
-(async () => {
-  currentBlockedSites = await storage.getBlockedSites();
-  const currentHostname = window.location.hostname;
-  isCurrentSiteBlocked = currentBlockedSites.some(domain => currentHostname.includes(domain));
+// Title management state
+let originalTitle: string | null = null;
 
-  if (isCurrentSiteBlocked) {
-    console.log(`MonoTaskr: ${currentHostname} is in the block list.`);
-    initBlocking();
+// Check if current site should be blocked based on mode and lists
+function checkBlockingStatus(hostname: string): boolean {
+  if (currentBlockingMode === BlockingMode.BLACKLIST) {
+    return currentBlockedSites.some(domain => hostname.includes(domain));
+  } else {
+    // Whitelist mode: Block if NOT in whitelist
+    // Exception: Always allow internal pages or empty hostname
+    if (!hostname) return false;
+
+    // Check if hostname matches any whitelisted domain
+    const isWhitelisted = currentWhitelistedSites.some(domain => hostname.includes(domain));
+    return !isWhitelisted;
   }
+}
 
-  // Listen for changes to blocked sites
-  storage.onBlockedSitesChanged((newSites) => {
-    currentBlockedSites = newSites;
-    const wasBlocked = isCurrentSiteBlocked;
-    isCurrentSiteBlocked = currentBlockedSites.some(domain => currentHostname.includes(domain));
+function updateBlockingStatus(hostname: string, updateOverlay: (state?: TimerState) => void) {
+  const wasShouldBeBlocked = shouldBeBlocked;
+  shouldBeBlocked = checkBlockingStatus(hostname);
 
-    // If blocking status changed, reinitialize or remove blocking
-    if (isCurrentSiteBlocked && !wasBlocked) {
-      initBlocking();
-    } else if (!isCurrentSiteBlocked && wasBlocked) {
-      // Remove overlay if site was unblocked
-      const container = document.getElementById('monotaskr-overlay-container');
-      if (container) container.remove();
-    }
-  });
-})();
+  // If status changed, we need to re-evaluate the overlay
+  if (wasShouldBeBlocked !== shouldBeBlocked) {
+    // We need to fetch timer state to know if we should actually show the overlay
+    storage.getTimerState().then((state) => {
+      updateOverlay(state);
+    });
+  }
+}
 
 function initBlocking() {
   let overlay: HTMLElement | null = null;
@@ -112,8 +118,13 @@ function initBlocking() {
     return container;
   };
 
-  const updateBlocking = (state: TimerState) => {
-    if (state.status === TimerStatus.RUNNING) {
+  const updateBlocking = (state?: TimerState) => {
+    // We need state to know if running. If not provided, fetch it?
+    // Actually, expecting calling code to provide it is better to avoid race conditions or multiple fetches.
+    // The timer listener provides it.
+    if (!state) return;
+
+    if (state.status === TimerStatus.RUNNING && shouldBeBlocked) {
       if (!overlay) {
         overlay = createOverlay();
         if (document.body) {
@@ -134,15 +145,51 @@ function initBlocking() {
     }
   };
 
-  // Initial check
-  storage.getTimerState().then(updateBlocking);
-
-  // Subscribe to changes
-  storage.onTimerStateChanged(updateBlocking);
+  return updateBlocking;
 }
 
+// Initialize
+(async () => {
+  // Load all settings
+  const [blockedSites, whitelistedSites, blockingMode] = await Promise.all([
+    storage.getBlockedSites(),
+    storage.getWhitelistedSites(),
+    storage.getBlockingMode()
+  ]);
 
-let originalTitle: string | null = null;
+  currentBlockedSites = blockedSites;
+  currentWhitelistedSites = whitelistedSites;
+  currentBlockingMode = blockingMode;
+
+  const currentHostname = window.location.hostname;
+  shouldBeBlocked = checkBlockingStatus(currentHostname);
+
+  // Initialize blocking overlay logic
+  const updateOverlay = initBlocking();
+
+  // Initial check with timer state
+  const timerState = await storage.getTimerState();
+  updateOverlay(timerState);
+
+  // Subscribe to timer changes
+  storage.onTimerStateChanged(updateOverlay);
+
+  // Listen for changes
+  storage.onBlockedSitesChanged((newSites) => {
+    currentBlockedSites = newSites;
+    updateBlockingStatus(currentHostname, updateOverlay);
+  });
+
+  storage.onWhitelistedSitesChanged((newSites) => {
+    currentWhitelistedSites = newSites;
+    updateBlockingStatus(currentHostname, updateOverlay);
+  });
+
+  storage.onBlockingModeChanged((newMode) => {
+    currentBlockingMode = newMode;
+    updateBlockingStatus(currentHostname, updateOverlay);
+  });
+})();
 
 // Listen for title updates from background service
 chrome.runtime.onMessage.addListener((message) => {
@@ -158,4 +205,3 @@ chrome.runtime.onMessage.addListener((message) => {
     }
   }
 });
-

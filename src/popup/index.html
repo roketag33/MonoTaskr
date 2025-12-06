@@ -88,7 +88,21 @@
         </div>
 
         <div class="settings-section">
-          <h3>Blocked Sites</h3>
+          <h3>Blocking Mode</h3>
+          <div class="mode-selector">
+            <label>
+              <input type="radio" name="blocking-mode" value="BLACKLIST" checked>
+              Blacklist (Block specific sites)
+            </label>
+            <label>
+              <input type="radio" name="blocking-mode" value="WHITELIST">
+              Whitelist (Block EVERYTHING else)
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3 id="sites-list-title">Blocked Sites</h3>
           <div class="add-site-form">
             <input type="text" id="site-input" placeholder="e.g., tiktok.com" />
             <button id="btn-add-site" class="primary-btn">Add</button>
@@ -99,11 +113,12 @@
             <button id="btn-back-settings" class="secondary-btn">Back</button>
           </div>
         </div>
+      </div>
 
-        <div class="bottom-actions">
-          <button id="btn-settings" class="text-btn">⚙️ Settings</button>
-          <button id="btn-history" class="text-btn">📊 View History</button>
-        </div>
+      <div class="bottom-actions">
+        <button id="btn-settings" class="text-btn">⚙️ Settings</button>
+        <button id="btn-history" class="text-btn">📊 View History</button>
+      </div>
     </main>
 
   </div>
