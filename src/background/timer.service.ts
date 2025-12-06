@@ -1,5 +1,6 @@
 import { TimerState, TimerStatus, DEFAULT_TIMER_STATE } from '../shared/types';
 import { storage } from '../shared/storage';
+import { TitleService } from './title.service';
 
 const ALARM_NAME = 'monotaskr_timer_tick';
 
@@ -52,6 +53,7 @@ export class TimerService {
             this.state.endTime = null; // No target end time when paused
             await this.saveState();
             this.syncAlarm();
+            // Optional: update title to indicate pause or just keep time
         }
     }
 
@@ -69,6 +71,7 @@ export class TimerService {
         if (this.state.remainingSeconds > 0) {
             this.state.remainingSeconds--;
             await this.saveState();
+            await TitleService.update(this.state.remainingSeconds);
         } else {
             await this.complete();
         }
@@ -90,6 +93,7 @@ export class TimerService {
 
         await this.saveState();
         this.syncAlarm();
+        await TitleService.reset();
 
         // Notification
         chrome.notifications.create({

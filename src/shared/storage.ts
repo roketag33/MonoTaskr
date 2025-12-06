@@ -5,7 +5,8 @@ const KEYS = {
     TIMER_STATE: 'timer_state',
     SESSIONS: 'sessions',
     ONBOARDING_COMPLETED: 'onboarding_completed',
-    BLOCKED_SITES: 'blocked_sites'
+    BLOCKED_SITES: 'blocked_sites',
+    SHOW_TAB_TITLE_TIMER: 'showTabTitleTimer'
 };
 
 export const storage = {
@@ -83,5 +84,14 @@ export const storage = {
             count: todaySessions.length,
             totalMinutes
         };
+    },
+
+    getShowTabTitleTimer: async (): Promise<boolean> => {
+        const result = await chrome.storage.local.get(KEYS.SHOW_TAB_TITLE_TIMER);
+        return result[KEYS.SHOW_TAB_TITLE_TIMER] !== false; // Default true
+    },
+
+    setShowTabTitleTimer: async (value: boolean): Promise<void> => {
+        await chrome.storage.local.set({ [KEYS.SHOW_TAB_TITLE_TIMER]: value });
     }
 };

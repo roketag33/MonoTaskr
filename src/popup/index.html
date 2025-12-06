@@ -75,22 +75,35 @@
       </div>
 
       <div id="settings-view" class="hidden">
-        <h2>Blocked Sites</h2>
-        <div class="add-site-form">
-          <input type="text" id="site-input" placeholder="e.g., tiktok.com" />
-          <button id="btn-add-site" class="primary-btn">Add</button>
-        </div>
-        <ul id="sites-list"></ul>
-        <div class="settings-actions">
-          <button id="btn-reset-sites" class="danger-btn">Reset to Defaults</button>
-          <button id="btn-back-settings" class="secondary-btn">Back</button>
-        </div>
-      </div>
+        <h2>Settings</h2>
 
-      <div class="bottom-actions">
-        <button id="btn-settings" class="text-btn">⚙️ Settings</button>
-        <button id="btn-history" class="text-btn">📊 View History</button>
-      </div>
+        <div class="settings-section">
+          <h3>General</h3>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="setting-tab-title">
+              Show timer in tab title
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Blocked Sites</h3>
+          <div class="add-site-form">
+            <input type="text" id="site-input" placeholder="e.g., tiktok.com" />
+            <button id="btn-add-site" class="primary-btn">Add</button>
+          </div>
+          <ul id="sites-list"></ul>
+          <div class="settings-actions">
+            <button id="btn-reset-sites" class="danger-btn">Reset to Defaults</button>
+            <button id="btn-back-settings" class="secondary-btn">Back</button>
+          </div>
+        </div>
+
+        <div class="bottom-actions">
+          <button id="btn-settings" class="text-btn">⚙️ Settings</button>
+          <button id="btn-history" class="text-btn">📊 View History</button>
+        </div>
     </main>
 
   </div>

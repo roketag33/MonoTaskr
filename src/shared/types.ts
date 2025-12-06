@@ -28,3 +28,8 @@ export const DEFAULT_TIMER_STATE: TimerState = {
     remainingSeconds: 25 * 60,
     endTime: null
 };
+
+export interface UserSettings {
+    blockedSites: string[];
+    showTabTitleTimer: boolean;
+}

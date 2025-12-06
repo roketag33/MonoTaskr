@@ -141,3 +141,21 @@ function initBlocking() {
   storage.onTimerStateChanged(updateBlocking);
 }
 
+
+let originalTitle: string | null = null;
+
+// Listen for title updates from background service
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === 'UPDATE_TITLE' && message.title) {
+    if (originalTitle === null) {
+      originalTitle = document.title;
+    }
+    document.title = message.title;
+  } else if (message.action === 'RESET_TITLE') {
+    if (originalTitle !== null) {
+      document.title = originalTitle;
+      originalTitle = null;
+    }
+  }
+});
+
