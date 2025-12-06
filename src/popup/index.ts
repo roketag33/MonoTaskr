@@ -23,6 +23,12 @@ const addSiteBtn = document.getElementById('btn-add-site')!;
 const sitesList = document.getElementById('sites-list')!;
 const resetSitesBtn = document.getElementById('btn-reset-sites')!;
 const backSettingsBtn = document.getElementById('btn-back-settings')!;
+const settingTabTitle = document.getElementById('setting-tab-title')! as HTMLInputElement;
+
+// Setting Event Listener
+settingTabTitle.addEventListener('change', async () => {
+    await storage.setShowTabTitleTimer(settingTabTitle.checked);
+});
 
 let selectedDuration = 25;
 
@@ -193,6 +199,10 @@ settingsBtn.addEventListener('click', async () => {
 
     // Show settings
     settingsView.classList.remove('hidden');
+
+    // Load general settings
+    const showTabTitle = await storage.getShowTabTitleTimer();
+    settingTabTitle.checked = showTabTitle;
 
     // Render sites
     await renderSitesList();

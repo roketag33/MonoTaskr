@@ -141,3 +141,10 @@ function initBlocking() {
   storage.onTimerStateChanged(updateBlocking);
 }
 
+
+// Listen for title updates from background service
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === 'UPDATE_TITLE' && message.title) {
+    document.title = message.title;
+  }
+});
