@@ -13,17 +13,27 @@ const historyBtn = document.getElementById('btn-history')!;
 const backBtn = document.getElementById('btn-back')!;
 const historyView = document.getElementById('history-view')!;
 const historyList = document.getElementById('history-list')!;
-const timerControls = [document.getElementById('timer-display')!, document.getElementById('controls')!, document.getElementById('actions')!]; // Note: controls might be controls-simple or controls-interval now, need to be careful
+const actions = document.getElementById('actions')!;
 
 // Interval Mode Elements
 const statusDisplay = document.getElementById('status-display')!;
 const modeBtnSimple = document.getElementById('mode-btn-simple')!;
 const modeBtnInterval = document.getElementById('mode-btn-interval')!;
+const modeToggles = document.querySelector('.timer-mode-toggles')!;
 const controlsSimple = document.getElementById('controls-simple')!;
 const controlsInterval = document.getElementById('controls-interval')!;
 const intervalFocusInput = document.getElementById('interval-focus') as HTMLInputElement;
 const intervalBreakInput = document.getElementById('interval-break') as HTMLInputElement;
 const intervalCyclesInput = document.getElementById('interval-cycles') as HTMLInputElement;
+
+const timerControls = [
+    timerDisplay,
+    statusDisplay,
+    modeToggles,
+    controlsSimple,
+    controlsInterval,
+    actions
+];
 
 // Settings Elements
 const settingsBtn = document.getElementById('btn-settings')!;
