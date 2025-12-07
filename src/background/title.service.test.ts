@@ -58,14 +58,17 @@ describe('TitleService', () => {
 
     describe('reset', () => {
         it('should reset title to default', async () => {
+            // Setup: we need to update first to set lastTabId
+            chrome.storage.local.get.mockResolvedValue({ showTabTitleTimer: true });
             chrome.tabs.query.mockResolvedValue([{ id: 123 }]);
+            await TitleService.update(65);
 
+            // Now reset
             await TitleService.reset();
 
-            expect(chrome.tabs.query).toHaveBeenCalled();
+            // verify reset message sent to lastTabId
             expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(123, {
-                action: 'UPDATE_TITLE',
-                title: 'MonoTaskr'
+                action: 'RESET_TITLE'
             });
         });
     });
