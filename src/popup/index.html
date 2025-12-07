@@ -52,11 +52,55 @@
 
     <main>
       <div id="timer-display">25:00</div>
+      <div id="status-display" class="hidden" style="text-align:center; color: #666; margin-bottom: 10px;">Focus</div>
 
-      <div id="controls" class="controls-group">
+      <div class="timer-mode-toggles" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+        <button id="mode-btn-simple" class="text-btn active" style="font-size: 0.9rem;">Simple</button>
+        <button id="mode-btn-interval" class="text-btn" style="font-size: 0.9rem;">Interval</button>
+      </div>
+
+      <div id="controls-simple" class="controls-group">
         <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
         <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
         <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+      </div>
+
+      <div id="controls-interval" class="controls-group hidden" style="flex-direction: column; gap: 10px;">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Focus
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Durée de travail (minutes)</span>
+              </div>
+            </label>
+            <input type="number" id="interval-focus" value="25" min="1"
+              style="width: 50px; text-align: center; padding: 5px;">
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Break
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Durée de la pause (minutes)</span>
+              </div>
+            </label>
+            <input type="number" id="interval-break" value="5" min="1"
+              style="width: 50px; text-align: center; padding: 5px;">
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Cycles
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Nombre de répétitions</span>
+              </div>
+            </label>
+            <input type="number" id="interval-cycles" value="4" min="1"
+              style="width: 50px; text-align: center; padding: 5px;">
+          </div>
+        </div>
       </div>
 
       <div id="actions" class="actions-group">
