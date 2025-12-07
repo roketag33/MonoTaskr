@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((message: MessagePayload, _sender, sendResp
     (async () => {
         switch (message.type) {
             case MESSAGES.START_TIMER:
-                await timerService.start(message.payload.duration);
+                await timerService.start(message.payload.duration, message.payload.intervalConfig);
                 break;
             case MESSAGES.RESET_TIMER:
                 await timerService.stop();
