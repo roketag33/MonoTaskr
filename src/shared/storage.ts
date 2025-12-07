@@ -1,11 +1,13 @@
-import { TimerState, DEFAULT_TIMER_STATE, Session } from './types';
-import { DEFAULT_BLOCKED_DOMAINS } from './constants';
+import { TimerState, DEFAULT_TIMER_STATE, Session, BlockingMode } from './types';
+import { DEFAULT_BLOCKED_DOMAINS, DEFAULT_WHITELISTED_DOMAINS, DEFAULT_USER_SETTINGS } from './constants';
 
 const KEYS = {
     TIMER_STATE: 'timer_state',
     SESSIONS: 'sessions',
     ONBOARDING_COMPLETED: 'onboarding_completed',
     BLOCKED_SITES: 'blocked_sites',
+    WHITELISTED_SITES: 'whitelisted_sites',
+    BLOCKING_MODE: 'blocking_mode',
     SHOW_TAB_TITLE_TIMER: 'showTabTitleTimer'
 };
 
@@ -23,6 +25,40 @@ export const storage = {
         chrome.storage.onChanged.addListener((changes, area) => {
             if (area === 'local' && changes[KEYS.BLOCKED_SITES]) {
                 callback(changes[KEYS.BLOCKED_SITES].newValue);
+            }
+        });
+    },
+
+    getWhitelistedSites: async (): Promise<string[]> => {
+        const result = await chrome.storage.local.get(KEYS.WHITELISTED_SITES);
+        return result[KEYS.WHITELISTED_SITES] || DEFAULT_WHITELISTED_DOMAINS;
+    },
+
+    setWhitelistedSites: async (sites: string[]): Promise<void> => {
+        await chrome.storage.local.set({ [KEYS.WHITELISTED_SITES]: sites });
+    },
+
+    onWhitelistedSitesChanged: (callback: (newSites: string[]) => void) => {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && changes[KEYS.WHITELISTED_SITES]) {
+                callback(changes[KEYS.WHITELISTED_SITES].newValue);
+            }
+        });
+    },
+
+    getBlockingMode: async (): Promise<BlockingMode> => {
+        const result = await chrome.storage.local.get(KEYS.BLOCKING_MODE);
+        return result[KEYS.BLOCKING_MODE] || DEFAULT_USER_SETTINGS.blockingMode;
+    },
+
+    setBlockingMode: async (mode: BlockingMode): Promise<void> => {
+        await chrome.storage.local.set({ [KEYS.BLOCKING_MODE]: mode });
+    },
+
+    onBlockingModeChanged: (callback: (newMode: BlockingMode) => void) => {
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && changes[KEYS.BLOCKING_MODE]) {
+                callback(changes[KEYS.BLOCKING_MODE].newValue);
             }
         });
     },

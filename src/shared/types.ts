@@ -5,6 +5,11 @@ export enum TimerStatus {
     COMPLETED = 'COMPLETED'
 }
 
+export enum BlockingMode {
+    BLACKLIST = 'BLACKLIST',
+    WHITELIST = 'WHITELIST'
+}
+
 export interface TimerState {
     status: TimerStatus;
     startTime: number | null; // Timestamp when the timer started
@@ -31,5 +36,7 @@ export const DEFAULT_TIMER_STATE: TimerState = {
 
 export interface UserSettings {
     blockedSites: string[];
+    whitelistedSites: string[];
+    blockingMode: BlockingMode;
     showTabTitleTimer: boolean;
 }

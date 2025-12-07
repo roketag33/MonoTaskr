@@ -1,3 +1,5 @@
+import { UserSettings, BlockingMode } from './types';
+
 export const DEFAULT_BLOCKED_DOMAINS = [
     'youtube.com',
     'www.youtube.com',
@@ -14,3 +16,12 @@ export const DEFAULT_BLOCKED_DOMAINS = [
     'netflix.com',
     'www.netflix.com'
 ];
+
+export const DEFAULT_WHITELISTED_DOMAINS: string[] = [];
+
+export const DEFAULT_USER_SETTINGS: UserSettings = {
+    blockedSites: DEFAULT_BLOCKED_DOMAINS,
+    whitelistedSites: DEFAULT_WHITELISTED_DOMAINS,
+    blockingMode: BlockingMode.BLACKLIST,
+    showTabTitleTimer: false
+};
