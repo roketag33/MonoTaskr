@@ -68,17 +68,35 @@
       <div id="controls-interval" class="controls-group hidden" style="flex-direction: column; gap: 10px;">
         <div style="display: flex; gap: 10px; justify-content: center;">
           <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem;">Focus</label>
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Focus
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Durée de travail (minutes)</span>
+              </div>
+            </label>
             <input type="number" id="interval-focus" value="25" min="1"
               style="width: 50px; text-align: center; padding: 5px;">
           </div>
           <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem;">Break</label>
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Break
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Durée de la pause (minutes)</span>
+              </div>
+            </label>
             <input type="number" id="interval-break" value="5" min="1"
               style="width: 50px; text-align: center; padding: 5px;">
           </div>
           <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem;">Cycles</label>
+            <label style="font-size: 0.8rem; display: flex; align-items: center;">
+              Cycles
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Nombre de répétitions</span>
+              </div>
+            </label>
             <input type="number" id="interval-cycles" value="4" min="1"
               style="width: 50px; text-align: center; padding: 5px;">
           </div>

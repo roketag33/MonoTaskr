@@ -1,4 +1,5 @@
 import './index.css';
+import './tooltip.css';
 import { storage } from '../shared/storage';
 import { MESSAGES } from '../shared/messaging';
 import { TimerState, TimerStatus, TimerMode } from '../shared/types';
