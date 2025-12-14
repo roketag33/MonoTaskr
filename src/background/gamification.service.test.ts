@@ -24,7 +24,8 @@ describe('GamificationService', () => {
         totalFocusSeconds: 60,
         xp: 1,
         level: 1,
-        badges: []
+        badges: [],
+        dailyTempAccess: { date: '2025-01-01', count: 0 }
       };
 
       const newBadges = GamificationService.checkBadges(stats);
@@ -37,7 +38,8 @@ describe('GamificationService', () => {
         totalFocusSeconds: 60,
         xp: 1,
         level: 1,
-        badges: ['FIRST_STEP']
+        badges: ['FIRST_STEP'],
+        dailyTempAccess: { date: '2025-01-01', count: 0 }
       };
 
       const newBadges = GamificationService.checkBadges(stats);
@@ -49,7 +51,8 @@ describe('GamificationService', () => {
         totalFocusSeconds: 3600,
         xp: 60,
         level: 2,
-        badges: ['FIRST_STEP']
+        badges: ['FIRST_STEP'],
+        dailyTempAccess: { date: '2025-01-01', count: 0 }
       };
 
       const newBadges = GamificationService.checkBadges(stats);

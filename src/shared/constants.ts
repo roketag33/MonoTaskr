@@ -34,6 +34,8 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
     totalFocusSeconds: 0,
     xp: 0,
     level: 1,
-    badges: []
-  }
+    badges: [],
+    dailyTempAccess: { date: new Date().toDateString(), count: 0 }
+  },
+  tempAccessLimit: 3
 };

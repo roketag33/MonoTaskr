@@ -21,10 +21,38 @@ const KEYS = {
   BLOCKING_MODE: 'blocking_mode',
   SHOW_TAB_TITLE_TIMER: 'showTabTitleTimer',
   SCHEDULE: 'schedule',
-  STATS: 'stats'
+  STATS: 'stats',
+  TEMP_OVERRIDES: 'temp_overrides',
+  TEMP_ACCESS_LIMIT: 'temp_access_limit'
 };
 
 export const storage = {
+  getTempOverrides: async (): Promise<Record<string, number>> => {
+    const result = await chrome.storage.local.get(KEYS.TEMP_OVERRIDES);
+    return result[KEYS.TEMP_OVERRIDES] || {};
+  },
+
+  setTempOverrides: async (overrides: Record<string, number>): Promise<void> => {
+    await chrome.storage.local.set({ [KEYS.TEMP_OVERRIDES]: overrides });
+  },
+
+  onTempOverridesChanged: (callback: (newOverrides: Record<string, number>) => void) => {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === 'local' && changes[KEYS.TEMP_OVERRIDES]) {
+        callback(changes[KEYS.TEMP_OVERRIDES].newValue);
+      }
+    });
+  },
+
+  getTempAccessLimit: async (): Promise<number> => {
+    const result = await chrome.storage.local.get(KEYS.TEMP_ACCESS_LIMIT);
+    return result[KEYS.TEMP_ACCESS_LIMIT] ?? DEFAULT_USER_SETTINGS.tempAccessLimit;
+  },
+
+  setTempAccessLimit: async (limit: number): Promise<void> => {
+    await chrome.storage.local.set({ [KEYS.TEMP_ACCESS_LIMIT]: limit });
+  },
+
   getBlockedSites: async (): Promise<string[]> => {
     const result = await chrome.storage.local.get(KEYS.BLOCKED_SITES);
     return result[KEYS.BLOCKED_SITES] || DEFAULT_BLOCKED_DOMAINS;
@@ -163,7 +191,9 @@ export const storage = {
 
   getUserStats: async (): Promise<UserStats> => {
     const result = await chrome.storage.local.get(KEYS.STATS);
-    return result[KEYS.STATS] || DEFAULT_USER_SETTINGS.stats;
+    const savedStats = result[KEYS.STATS] || {};
+    // Merge with defaults to ensure new fields like dailyTempAccess exist
+    return { ...DEFAULT_USER_SETTINGS.stats, ...savedStats };
   },
 
   setUserStats: async (stats: UserStats): Promise<void> => {

@@ -446,6 +446,17 @@ settingsBtn.addEventListener('click', async () => {
 
   // Render sites
   await renderSitesList();
+
+  // Load Temp Access Limit
+  const tempLimit = await storage.getTempAccessLimit();
+  const tempLimitInput = document.getElementById('temp-access-limit') as HTMLInputElement;
+  if (tempLimitInput) tempLimitInput.value = tempLimit.toString();
+});
+
+const tempLimitInput = document.getElementById('temp-access-limit') as HTMLInputElement;
+tempLimitInput?.addEventListener('change', async () => {
+  const limit = parseInt(tempLimitInput.value);
+  await storage.setTempAccessLimit(limit);
 });
 
 // Schedule Event Listeners

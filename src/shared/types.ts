@@ -75,6 +75,7 @@ export interface UserStats {
   xp: number;
   level: number;
   badges: string[];
+  dailyTempAccess: { date: string; count: number };
 }
 
 export interface UserSettings {
@@ -84,4 +85,5 @@ export interface UserSettings {
   showTabTitleTimer: boolean;
   schedule: ScheduleConfig;
   stats: UserStats;
+  tempAccessLimit: number;
 }
