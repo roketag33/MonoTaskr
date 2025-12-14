@@ -29,5 +29,11 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
     days: [1, 2, 3, 4, 5], // Mon-Fri default
     startTime: '09:00',
     endTime: '17:00'
+  },
+  stats: {
+    totalFocusSeconds: 0,
+    xp: 0,
+    level: 1,
+    badges: []
   }
 };

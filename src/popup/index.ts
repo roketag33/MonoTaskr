@@ -3,6 +3,7 @@ import './tooltip.css';
 import { storage } from '../shared/storage';
 import { MESSAGES } from '../shared/messaging';
 import { TimerState, TimerStatus, TimerMode } from '../shared/types';
+import { GamificationService, BADGES } from '../background/gamification.service';
 
 // DOM Elements
 const timerDisplay = document.getElementById('timer-display')!;
@@ -15,6 +16,12 @@ const backBtn = document.getElementById('btn-back')!;
 const historyView = document.getElementById('history-view')!;
 const historyList = document.getElementById('history-list')!;
 const actions = document.getElementById('actions')!;
+
+// Gamification Elements
+const levelBadge = document.getElementById('level-badge')!;
+const xpText = document.getElementById('xp-text')!;
+const xpProgress = document.getElementById('xp-progress')!;
+const badgesContainer = document.getElementById('badges-container')!;
 
 // Interval Mode Elements
 const statusDisplay = document.getElementById('status-display')!;
@@ -601,6 +608,35 @@ async function completeOnboarding() {
 skipBtn.addEventListener('click', completeOnboarding);
 startOnboardingBtn.addEventListener('click', completeOnboarding);
 
+async function renderGamification() {
+  const stats = await storage.getUserStats();
+
+  levelBadge.textContent = `Lvl ${stats.level}`;
+  xpText.textContent = `${stats.xp} XP`;
+
+  const progress = GamificationService.getProgress(stats.xp, stats.level);
+  xpProgress.style.width = `${progress}%`;
+
+  badgesContainer.innerHTML = '';
+  if (BADGES.length > 0) {
+    badgesContainer.parentElement!.classList.remove('hidden'); // Ensure container visible if badges exist
+  }
+
+  BADGES.forEach((badge) => {
+    const isUnlocked = stats.badges.includes(badge.id);
+    const badgeEl = document.createElement('div');
+    badgeEl.className = 'badge-item';
+    badgeEl.innerHTML = badge.icon;
+    badgeEl.title =
+      `${badge.name}: ${badge.description}` + (isUnlocked ? ' (Unlocked)' : ' (Locked)');
+    badgeEl.style.fontSize = '1.5rem';
+    badgeEl.style.cursor = 'help';
+    badgeEl.style.opacity = isUnlocked ? '1' : '0.3';
+    badgeEl.style.filter = isUnlocked ? 'none' : 'grayscale(100%)';
+    badgesContainer.appendChild(badgeEl);
+  });
+}
+
 // Init
 (async () => {
   const onboardingCompleted = await storage.getOnboardingCompleted();
@@ -616,4 +652,7 @@ startOnboardingBtn.addEventListener('click', completeOnboarding);
   const state = await storage.getTimerState();
   updateUI(state);
   storage.onTimerStateChanged(updateUI);
+
+  await renderGamification();
+  storage.onUserStatsChanged(renderGamification);
 })();

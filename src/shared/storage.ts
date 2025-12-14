@@ -1,4 +1,11 @@
-import { TimerState, DEFAULT_TIMER_STATE, Session, BlockingMode, ScheduleConfig } from './types';
+import {
+  TimerState,
+  DEFAULT_TIMER_STATE,
+  Session,
+  BlockingMode,
+  ScheduleConfig,
+  UserStats
+} from './types';
 import {
   DEFAULT_BLOCKED_DOMAINS,
   DEFAULT_WHITELISTED_DOMAINS,
@@ -13,7 +20,8 @@ const KEYS = {
   WHITELISTED_SITES: 'whitelisted_sites',
   BLOCKING_MODE: 'blocking_mode',
   SHOW_TAB_TITLE_TIMER: 'showTabTitleTimer',
-  SCHEDULE: 'schedule'
+  SCHEDULE: 'schedule',
+  STATS: 'stats'
 };
 
 export const storage = {
@@ -149,6 +157,23 @@ export const storage = {
     chrome.storage.onChanged.addListener((changes, area) => {
       if (area === 'local' && changes[KEYS.SCHEDULE]) {
         callback(changes[KEYS.SCHEDULE].newValue);
+      }
+    });
+  },
+
+  getUserStats: async (): Promise<UserStats> => {
+    const result = await chrome.storage.local.get(KEYS.STATS);
+    return result[KEYS.STATS] || DEFAULT_USER_SETTINGS.stats;
+  },
+
+  setUserStats: async (stats: UserStats): Promise<void> => {
+    await chrome.storage.local.set({ [KEYS.STATS]: stats });
+  },
+
+  onUserStatsChanged: (callback: (newStats: UserStats) => void) => {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === 'local' && changes[KEYS.STATS]) {
+        callback(changes[KEYS.STATS].newValue);
       }
     });
   }
