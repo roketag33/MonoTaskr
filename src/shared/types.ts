@@ -90,3 +90,25 @@ export interface UserSettings {
   tempAccessLimit: number;
   theme: Theme;
 }
+
+export const DEFAULT_USER_SETTINGS: UserSettings = {
+  blockedSites: [],
+  whitelistedSites: [],
+  blockingMode: BlockingMode.BLACKLIST,
+  showTabTitleTimer: true,
+  schedule: {
+    enabled: false,
+    days: [1, 2, 3, 4, 5],
+    startTime: '09:00',
+    endTime: '17:00'
+  },
+  stats: {
+    totalFocusSeconds: 0,
+    xp: 0,
+    level: 1,
+    badges: [],
+    dailyTempAccess: { date: '', count: 0 }
+  },
+  tempAccessLimit: 3,
+  theme: 'system'
+};

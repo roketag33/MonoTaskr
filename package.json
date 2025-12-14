@@ -1,6 +1,7 @@
 {
   "name": "monotaskr",
   "version": "0.0.3",
+  "type": "module",
   "description": "A focus timer extension for Chrome",
   "scripts": {
     "dev": "vite",
@@ -17,8 +18,11 @@
     "@types/chrome": "^0.0.263",
     "@types/jsdom": "^27.0.0",
     "@types/node": "^20.11.24",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
@@ -27,5 +31,9 @@
     "typescript": "^5.3.3",
     "vite": "^5.1.4",
     "vitest": "^4.0.15"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   }
 }
