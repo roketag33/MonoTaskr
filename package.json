@@ -1,21 +1,29 @@
 {
-    "name": "monotaskr",
-    "version": "0.0.1",
-    "description": "A focus timer extension for Chrome",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview",
-        "test": "vitest run"
-    },
-    "devDependencies": {
-        "@crxjs/vite-plugin": "^2.0.0-beta.23",
-        "@types/chrome": "^0.0.263",
-        "@types/jsdom": "^27.0.0",
-        "@types/node": "^20.11.24",
-        "jsdom": "^27.2.0",
-        "typescript": "^5.3.3",
-        "vite": "^5.1.4",
-        "vitest": "^4.0.15"
-    }
+  "name": "monotaskr",
+  "version": "0.0.1",
+  "description": "A focus timer extension for Chrome",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.23",
+    "@types/chrome": "^0.0.263",
+    "@types/jsdom": "^27.0.0",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jsdom": "^27.2.0",
+    "prettier": "^3.7.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4",
+    "vitest": "^4.0.15"
+  }
 }

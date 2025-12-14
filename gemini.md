@@ -86,7 +86,7 @@ Les Epics (MON-1 → MON-6) décrivent les grands blocs : blocage, popup, stats,
 
 Les Stories (MON-7 → MON-16) décrivent le comportement attendu du point de vue utilisateur.
 
-Les Sous-tâches (TECH-*) décrivent le travail technique à faire.
+Les Sous-tâches (TECH-\*) décrivent le travail technique à faire.
 
 Gemini doit :
 
@@ -278,7 +278,7 @@ pull main puis creer la branche en suivant les conventions de développeur git a
 
 Coder de façon incrémentale et TDD :
 
-commencer par écrire les test  pour avoir un workflow TDD
+commencer par écrire les test pour avoir un workflow TDD
 
 contiuer avec la structure (types, fonctions, squelette de composant) ;
 
