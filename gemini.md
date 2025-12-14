@@ -351,3 +351,71 @@ Tu respectes l’architecture MV3 / popup / background / content décrite dans l
 Tu n’ajoutes rien qui n’est pas dans la roadmap ou les spécifications, sauf si c’est "gratuit" et clairement justifié.
 
 Ce fichier gemini.md est ta référence pour la façon de travailler sur MonoTaskr.
+
+9. Design System & UI/UX (MON-70)
+
+Pour créer une interface moderne et uniforme, Gemini doit suivre ces règles strictes.
+
+9.1. Stack Technique
+
+- **Styling**: Tailwind CSS (obligatoire pour tout nouveau style).
+- **Composants**: Primiives Radix UI (si accessibilité complexe) ou HTML natif stylisé via Tailwind.
+- **Icônes**: Lucide React.
+
+  9.2. Règles de Design (Tailwind Tokens)
+
+**Couleurs (Semantic)** :
+Utiliser les variables CSS définies dans `index.css` (compatible Dark Mode).
+
+- `bg-background` / `text-foreground` : Fond et texte principal.
+- `bg-card` / `text-card-foreground` : Élément conteneur (ex: liste, stat).
+- `bg-primary` / `text-primary-foreground` : Actions principales (Bouton Start, Save).
+- `bg-destructive` : Actions dangereuses (Reset, Supprimer).
+- `bg-muted` : Éléments secondaires (fonds grisés, textes moins importants).
+
+**Espacement (Spacing)** :
+
+- Base : **4px** (`w-1` / `p-1`).
+- Marges standards :
+  - Padding conteneur : `p-4` (16px) ou `p-6` (24px).
+  - Gap entre éléments majeurs : `gap-4` (16px).
+  - Gap entre éléments liés : `gap-2` (8px).
+- **INTERDIT** : Marges arbitraires (ex: `mt-[3px]`). Toujours utiliser l'échelle Tailwind.
+
+**Typographie** :
+
+- Police : Sans-serif moderne (Inter ou système).
+- Titres : `text-xl` ou `text-2xl` + `font-bold`.
+- Sous-titres : `text-sm` + `font-medium` + `text-muted-foreground`.
+- Corps : `text-sm` (standard) ou `text-xs` (détails).
+
+**Arrondis (Radius)** :
+
+- Boutons/Inputs : `rounded-md` (0.5rem / 8px) ou `rounded-lg`.
+- Cards : `rounded-xl`.
+- Pas de coins carrés sauf nécessité absolue.
+
+**États Interactifs** :
+
+- Tout élément cliquable doit avoir un feedback :
+  - Hover : `hover:bg-primary/90` ou `hover:bg-muted`.
+  - Focus : `focus-visible:ring-2`.
+  - Active : `active:scale-95` (micro-interaction "clic").
+
+    9.3. Composants Réutilisables
+    Ne pas recréer de boutons ou d'inputs à la volée. Utiliser les composants de `src/popup/components/ui` :
+
+- `<Button />`
+- `<Card />`
+- `<Input />`
+- `<Switch />`
+- `<Badge />`
+
+  9.4. "Wow" Factor Checklist
+  Avant de valider une vue :
+
+1. [ ] **Consistance** : Les alignements sont-ils parfaits (grid system) ?
+2. [ ] **Tactilité** : Les boutons réagissent-ils au clic ?
+3. [ ] **Hierarchie** : L'action principale est-elle évidente (Primary color) ?
+4. [ ] **Empty States** : Si une liste est vide, afficher un message/icône sympa, pas du vide.
+5. [ ] **Motion** : Transitions douces sur les couleurs (`transition-colors duration-200`).

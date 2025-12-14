@@ -51,10 +51,33 @@
     "message": "Reset to Defaults"
   },
   "btnSettings": {
-    "message": "⚙️ Settings"
+    "message": "Settings"
   },
   "btnViewHistory": {
-    "message": "📊 View History"
+    "message": "View History"
+  },
+  "statusIdle": {
+    "message": "Idle"
+  },
+  "btnStart": {
+    "message": "Start"
+  },
+  "cycleCount": {
+    "message": "Cycle $1 of $2",
+    "placeholders": {
+      "current": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "historyRecentSessions": {
+    "message": "Recent Sessions"
+  },
+  "settingTabTitleDescription": {
+    "message": "Show timer in tab title"
   },
   "modeSimple": {
     "message": "Simple"

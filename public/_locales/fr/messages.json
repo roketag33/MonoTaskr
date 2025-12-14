@@ -51,10 +51,33 @@
     "message": "Réinitialiser par défaut"
   },
   "btnSettings": {
-    "message": "⚙️ Paramètres"
+    "message": "Paramètres"
   },
   "btnViewHistory": {
-    "message": "📊 Voir l'Historique"
+    "message": "Voir l'Historique"
+  },
+  "statusIdle": {
+    "message": "Prêt"
+  },
+  "btnStart": {
+    "message": "Commencer"
+  },
+  "cycleCount": {
+    "message": "Cycle $1 sur $2",
+    "placeholders": {
+      "current": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "historyRecentSessions": {
+    "message": "Sessions Récentes"
+  },
+  "settingTabTitleDescription": {
+    "message": "Afficher le minuteur dans le titre de l'onglet"
   },
   "modeSimple": {
     "message": "Simple"

@@ -3,6 +3,12 @@ import { I18nService } from '../../shared/i18n.service';
 import { storage } from '../../shared/storage';
 import { BlockingMode, Theme } from '../../shared/types';
 import { ExportService } from '../../shared/export.service';
+import { Button } from './ui/button';
+import { Switch } from './ui/switch';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
+import { Trash2, Download, Plus } from 'lucide-react';
 
 interface SettingsViewProps {
   onBack: () => void;
@@ -99,89 +105,136 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
   const currentSites = blockingMode === BlockingMode.BLACKLIST ? blockedSites : whitelistedSites;
 
   return (
-    <div id="settings-view">
-      <h2>{I18nService.getMessage('settingsTitle')}</h2>
+    <div className="space-y-6 pb-4">
+      <h2 className="text-2xl font-bold">{I18nService.getMessage('settingsTitle')}</h2>
 
-      <div className="settings-section">
-        <h3>{I18nService.getMessage('settingsGeneralTitle')}</h3>
-
-        <div className="setting-item">
-          <label>
-            <input
-              type="checkbox"
+      {/* General Settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{I18nService.getMessage('settingsGeneralTitle')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="tab-title" className="flex flex-col gap-1">
+              <span>{I18nService.getMessage('settingTabTitle')}</span>
+              <span className="font-normal text-xs text-muted-foreground">
+                {I18nService.getMessage('settingTabTitleDescription')}
+              </span>
+            </Label>
+            <Switch
+              id="tab-title"
               checked={showTabTitle}
-              onChange={async (e) => {
-                setShowTabTitle(e.target.checked);
-                await storage.setShowTabTitleTimer(e.target.checked);
+              onCheckedChange={async (checked) => {
+                setShowTabTitle(checked);
+                await storage.setShowTabTitleTimer(checked);
               }}
             />
-            <span>{I18nService.getMessage('settingTabTitle')}</span>
-          </label>
-        </div>
+          </div>
 
-        <div className="setting-item">
-          <label>{I18nService.getMessage('settingModeLabel')}</label>
-          <select
-            value={blockingMode}
-            onChange={(e) => handleModeChange(e.target.value as BlockingMode)}
-          >
-            <option value={BlockingMode.BLACKLIST}>
-              {I18nService.getMessage('modeBlacklist')}
-            </option>
-            <option value={BlockingMode.WHITELIST}>
-              {I18nService.getMessage('modeWhitelist')}
-            </option>
-          </select>
-        </div>
+          <div className="space-y-2">
+            <Label>{I18nService.getMessage('settingModeLabel')}</Label>
+            <div className="flex flex-col gap-2">
+              <Button
+                variant={blockingMode === BlockingMode.BLACKLIST ? 'default' : 'outline'}
+                onClick={() => handleModeChange(BlockingMode.BLACKLIST)}
+                size="sm"
+                className="w-full justify-start pl-4"
+              >
+                {I18nService.getMessage('modeBlacklist')}
+              </Button>
+              <Button
+                variant={blockingMode === BlockingMode.WHITELIST ? 'default' : 'outline'}
+                onClick={() => handleModeChange(BlockingMode.WHITELIST)}
+                size="sm"
+                className="w-full justify-start pl-4"
+              >
+                {I18nService.getMessage('modeWhitelist')}
+              </Button>
+            </div>
+          </div>
 
-        <div className="setting-item">
-          <label>{I18nService.getMessage('settingTheme')}</label>
-          <select value={theme} onChange={(e) => handleThemeChange(e.target.value as Theme)}>
-            <option value="system">{I18nService.getMessage('themeSystem')}</option>
-            <option value="light">{I18nService.getMessage('themeLight')}</option>
-            <option value="dark">{I18nService.getMessage('themeDark')}</option>
-          </select>
-        </div>
-      </div>
+          <div className="space-y-2">
+            <Label>{I18nService.getMessage('settingTheme')}</Label>
+            <select
+              value={theme}
+              onChange={(e) => handleThemeChange(e.target.value as Theme)}
+              className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            >
+              <option value="system">{I18nService.getMessage('themeSystem')}</option>
+              <option value="light">{I18nService.getMessage('themeLight')}</option>
+              <option value="dark">{I18nService.getMessage('themeDark')}</option>
+            </select>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="settings-section">
-        <h3>{I18nService.getMessage('settingsDataTitle')}</h3>
-        <div className="setting-item">
-          <button className="secondary-btn" onClick={handleExport}>
+      {/* Site Management */}
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            {blockingMode === BlockingMode.BLACKLIST
+              ? I18nService.getMessage('titleBlockedSites')
+              : I18nService.getMessage('titleWhitelistedSites')}
+          </CardTitle>
+          <CardDescription>
+            {blockingMode === BlockingMode.BLACKLIST
+              ? 'These sites will be blocked during focus.'
+              : 'Only these sites will be accessible.'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-2">
+            <Input
+              value={newSite}
+              onChange={(e) => setNewSite(e.target.value)}
+              placeholder={I18nService.getMessage('placeholderAddSite')}
+              onKeyDown={(e) => e.key === 'Enter' && handleAddSite()}
+            />
+            <Button onClick={handleAddSite} size="icon">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <div className="h-48 overflow-y-auto rounded-md border p-2 space-y-2">
+            {currentSites.length === 0 && (
+              <p className="text-center text-sm text-muted-foreground py-8">No sites added yet.</p>
+            )}
+            {currentSites.map((site) => (
+              <div
+                key={site}
+                className="flex items-center justify-between p-2 rounded-md bg-muted/50 hover:bg-muted group"
+              >
+                <span className="text-sm font-medium truncat max-w-[200px]">{site}</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleRemoveSite(site)}
+                  className="h-8 w-8 text-muted-foreground hover:text-destructive opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Data Export */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{I18nService.getMessage('settingsDataTitle')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button variant="outline" className="w-full gap-2" onClick={handleExport}>
+            <Download className="h-4 w-4" />
             {I18nService.getMessage('btnExport')}
-          </button>
-        </div>
-      </div>
+          </Button>
+        </CardContent>
+      </Card>
 
-      <div className="settings-section">
-        <h3>
-          {blockingMode === BlockingMode.BLACKLIST
-            ? I18nService.getMessage('titleBlockedSites')
-            : I18nService.getMessage('titleWhitelistedSites')}
-        </h3>
-        <div className="add-site-form">
-          <input
-            type="text"
-            value={newSite}
-            onChange={(e) => setNewSite(e.target.value)}
-            placeholder={I18nService.getMessage('placeholderAddSite')}
-          />
-          <button className="primary-btn" onClick={handleAddSite}>
-            {I18nService.getMessage('btnAdd')}
-          </button>
-        </div>
-        <ul id="sites-list">
-          {currentSites.map((site) => (
-            <li key={site} className="site-item">
-              <span>{site}</span>
-              <button onClick={() => handleRemoveSite(site)}>🗑️</button>
-            </li>
-          ))}
-        </ul>
-        <button className="secondary-btn" onClick={onBack}>
-          {I18nService.getMessage('btnBack')}
-        </button>
-      </div>
+      <Button variant="ghost" className="w-full" onClick={onBack}>
+        {I18nService.getMessage('btnBack')}
+      </Button>
     </div>
   );
 };

@@ -8,6 +8,8 @@ import { OnboardingView } from './components/OnboardingView';
 import { storage } from '../shared/storage';
 import { MESSAGES } from '../shared/messaging';
 import { I18nService } from '../shared/i18n.service';
+import { Button } from './components/ui/button';
+import { Settings, History, Clock, ArrowLeft } from 'lucide-react';
 
 type View = 'timer' | 'history' | 'settings';
 
@@ -44,37 +46,73 @@ const App: React.FC = () => {
     setIsOnboarding(false);
   };
 
-  if (isOnboarding === null) return null; // Loading
+  if (isOnboarding === null)
+    return (
+      <div className="p-4 flex items-center justify-center h-[500px] text-muted-foreground">
+        Loading...
+      </div>
+    );
   if (isOnboarding) return <OnboardingView onComplete={handleCompleteOnboarding} />;
 
   return (
-    <div id="app">
-      <header>
-        <h1>{I18nService.getMessage('appName')}</h1>
+    <div className="w-[360px] min-h-[500px] bg-background text-foreground flex flex-col font-sans transition-colors duration-300">
+      <header className="p-4 flex items-center justify-between border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+        <h1 className="text-xl font-bold tracking-tight text-primary flex items-center gap-2">
+          <Clock className="w-5 h-5" />
+          {I18nService.getMessage('appName')}
+        </h1>
+        {currentView !== 'timer' && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setCurrentView('timer')}
+            className="gap-1"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {I18nService.getMessage('btnBack')}
+          </Button>
+        )}
       </header>
 
-      <main>
+      <main className="flex-1 p-4 relative">
         {currentView === 'timer' && (
-          <TimerView
-            state={timerState}
-            onStart={handleStart}
-            onStop={handleStop}
-            onReset={handleReset}
-          />
+          <div className="space-y-6 animate-in slide-in-from-bottom-2 duration-300">
+            <TimerView
+              state={timerState}
+              onStart={handleStart}
+              onStop={handleStop}
+              onReset={handleReset}
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 h-12 hover:bg-muted"
+                onClick={() => setCurrentView('settings')}
+              >
+                <Settings className="w-4 h-4" />
+                {I18nService.getMessage('btnSettings')}
+              </Button>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 h-12 hover:bg-muted"
+                onClick={() => setCurrentView('history')}
+              >
+                <History className="w-4 h-4" />
+                {I18nService.getMessage('btnViewHistory')}
+              </Button>
+            </div>
+          </div>
         )}
 
-        {currentView === 'settings' && <SettingsView onBack={() => setCurrentView('timer')} />}
+        {currentView === 'settings' && (
+          <div className="animate-in slide-in-from-right-4 duration-300">
+            <SettingsView onBack={() => setCurrentView('timer')} />
+          </div>
+        )}
 
-        {currentView === 'history' && <HistoryView onBack={() => setCurrentView('timer')} />}
-
-        {currentView === 'timer' && (
-          <div className="bottom-actions">
-            <button className="text-btn" onClick={() => setCurrentView('settings')}>
-              {I18nService.getMessage('btnSettings')}
-            </button>
-            <button className="text-btn" onClick={() => setCurrentView('history')}>
-              {I18nService.getMessage('btnViewHistory')}
-            </button>
+        {currentView === 'history' && (
+          <div className="animate-in slide-in-from-right-4 duration-300">
+            <HistoryView onBack={() => setCurrentView('timer')} />
           </div>
         )}
       </main>
