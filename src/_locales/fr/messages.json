@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "MonoTaskr"
+  },
+  "appDescription": {
+    "message": "Minuteur de concentration et bloqueur de distractions"
+  },
+  "onboardingWelcomeTitle": {
+    "message": "Bienvenue sur MonoTaskr"
+  },
+  "onboardingWelcomeText": {
+    "message": "Concentrez-vous sur l'essentiel. Nous vous aidons à rester dans la zone en bloquant les distractions."
+  },
+  "onboardingBlockTitle": {
+    "message": "Bloquez les Distractions"
+  },
+  "onboardingBlockText": {
+    "message": "Nous bloquons des sites comme YouTube, Facebook et Reddit pendant que vous travaillez."
+  },
+  "onboardingReadyTitle": {
+    "message": "Prêt à vous concentrer ?"
+  },
+  "onboardingReadyText": {
+    "message": "Lancez votre première session de 25 minutes et voyez la différence."
+  },
+  "btnSkip": {
+    "message": "Passer"
+  },
+  "btnNext": {
+    "message": "Suivant"
+  },
+  "btnStartFocus": {
+    "message": "Démarrer"
+  },
+  "btnStop": {
+    "message": "Arrêter"
+  },
+  "btnResume": {
+    "message": "Reprendre"
+  },
+  "btnReset": {
+    "message": "Réinitialiser"
+  },
+  "btnAdd": {
+    "message": "Ajouter"
+  },
+  "btnBack": {
+    "message": "Retour"
+  },
+  "btnResetDefaults": {
+    "message": "Réinitialiser par défaut"
+  },
+  "btnSettings": {
+    "message": "⚙️ Paramètres"
+  },
+  "btnViewHistory": {
+    "message": "📊 Voir l'Historique"
+  },
+  "modeSimple": {
+    "message": "Simple"
+  },
+  "modeInterval": {
+    "message": "Intervalle"
+  },
+  "statusFocus": {
+    "message": "Concentration"
+  },
+  "statusPaused": {
+    "message": "En pause"
+  },
+  "statusBreak": {
+    "message": "En pause"
+  },
+  "statusFocusSession": {
+    "message": "Session de focus"
+  },
+  "cycle": {
+    "message": "Cycle"
+  },
+  "tooltipFocusDuration": {
+    "message": "Durée de travail (minutes)"
+  },
+  "tooltipBreakDuration": {
+    "message": "Durée de pause (minutes)"
+  },
+  "tooltipCycles": {
+    "message": "Nombre de répétitions"
+  },
+  "historyTitle": {
+    "message": "Historique"
+  },
+  "statsSessionsToday": {
+    "message": "Sessions aujourd'hui"
+  },
+  "statsMinutesFocus": {
+    "message": "Minutes de focus"
+  },
+  "historyEmpty": {
+    "message": "Aucune session pour le moment"
+  },
+  "settingsTitle": {
+    "message": "Paramètres"
+  },
+  "settingsGeneralTitle": {
+    "message": "Général"
+  },
+  "settingTabTitle": {
+    "message": "Afficher le minuteur dans l'onglet"
+  },
+  "settingModeLabel": {
+    "message": "Mode"
+  },
+  "modeBlacklist": {
+    "message": "Liste Noire (Sites Bloqués)"
+  },
+  "modeWhitelist": {
+    "message": "Liste Blanche (Sites Autorisés)"
+  },
+  "settingTempAccessLimit": {
+    "message": "Limite d'Accès Temporaire (journalier)"
+  },
+  "settingScheduleBlocking": {
+    "message": "Blocage Planifié"
+  },
+  "settingActiveDays": {
+    "message": "Jours Actifs"
+  },
+  "settingStart": {
+    "message": "Début"
+  },
+  "settingEnd": {
+    "message": "Fin"
+  },
+  "settingTheme": {
+    "message": "Thème"
+  },
+  "themeSystem": {
+    "message": "Système"
+  },
+  "themeLight": {
+    "message": "Clair"
+  },
+  "themeDark": {
+    "message": "Sombre"
+  },
+  "titleBlockedSites": {
+    "message": "Sites Bloqués"
+  },
+  "titleWhitelistedSites": {
+    "message": "Sites Autorisés"
+  },
+  "placeholderAddSite": {
+    "message": "ex: tiktok.com"
+  },
+  "emptyBlockedSites": {
+    "message": "Aucun site bloqué"
+  },
+  "emptyWhitelistedSites": {
+    "message": "Aucun site autorisé"
+  },
+  "confirmResetBlacklist": {
+    "message": "Réinitialiser les sites bloqués par défaut ?"
+  },
+  "confirmResetWhitelist": {
+    "message": "Vider la liste blanche ?"
+  },
+  "badgeFirstStepName": {
+    "message": "Premier Pas"
+  },
+  "badgeFirstStepDesc": {
+    "message": "Complétez votre première minute de concentration"
+  },
+  "badgeFocusNoviceName": {
+    "message": "Novice du Focus"
+  },
+  "badgeFocusNoviceDesc": {
+    "message": "Atteignez le Niveau 2"
+  },
+  "badgeFocusMasterName": {
+    "message": "Maître du Focus"
+  },
+  "badgeFocusMasterDesc": {
+    "message": "Atteignez le Niveau 10"
+  },
+  "badgeUnlocked": {
+    "message": "Débloqué"
+  },
+  "badgeLocked": {
+    "message": "Verrouillé"
+  },
+  "levelPrefix": {
+    "message": "Niv"
+  }
+}

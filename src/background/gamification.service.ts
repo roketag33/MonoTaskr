@@ -1,24 +1,26 @@
 import { UserStats, Badge } from '../shared/types';
 
-export const BADGES: Badge[] = [
+import { I18nService } from '../shared/i18n.service';
+
+export const getBadges = (): Badge[] => [
   {
     id: 'FIRST_STEP',
-    name: 'First Step',
-    description: 'Complete your first minute of focus',
+    name: I18nService.getMessage('badgeFirstStepName'),
+    description: I18nService.getMessage('badgeFirstStepDesc'),
     icon: '🌱',
     condition: (stats: UserStats) => stats.xp >= 1
   },
   {
     id: 'FOCUS_NOVICE',
-    name: 'Focus Novice',
-    description: 'Reach Level 2',
+    name: I18nService.getMessage('badgeFocusNoviceName'),
+    description: I18nService.getMessage('badgeFocusNoviceDesc'),
     icon: '🧘',
     condition: (stats: UserStats) => stats.level >= 2
   },
   {
     id: 'FOCUS_MASTER',
-    name: 'Focus Master',
-    description: 'Reach Level 10',
+    name: I18nService.getMessage('badgeFocusMasterName'),
+    description: I18nService.getMessage('badgeFocusMasterDesc'),
     icon: '🥋',
     condition: (stats: UserStats) => stats.level >= 10
   }
@@ -46,8 +48,9 @@ export class GamificationService {
 
   static checkBadges(stats: UserStats): Badge[] {
     const unlockedBadges: Badge[] = [];
+    const badges = getBadges();
 
-    BADGES.forEach((badge) => {
+    badges.forEach((badge) => {
       if (!stats.badges.includes(badge.id)) {
         if (badge.condition && badge.condition(stats)) {
           unlockedBadges.push(badge);

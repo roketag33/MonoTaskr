@@ -37,5 +37,6 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
     badges: [],
     dailyTempAccess: { date: new Date().toDateString(), count: 0 }
   },
-  tempAccessLimit: 3
+  tempAccessLimit: 3,
+  theme: 'system'
 };

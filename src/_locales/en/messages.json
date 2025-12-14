@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "MonoTaskr"
+  },
+  "appDescription": {
+    "message": "Focus timer and distraction blocker"
+  },
+  "onboardingWelcomeTitle": {
+    "message": "Welcome to MonoTaskr"
+  },
+  "onboardingWelcomeText": {
+    "message": "Focus on what matters. We help you stay in the zone by blocking distractions."
+  },
+  "onboardingBlockTitle": {
+    "message": "Block Distractions"
+  },
+  "onboardingBlockText": {
+    "message": "We block sites like YouTube, Facebook, and Reddit while you focus."
+  },
+  "onboardingReadyTitle": {
+    "message": "Ready to Focus?"
+  },
+  "onboardingReadyText": {
+    "message": "Start your first 25-minute session now and see the difference."
+  },
+  "btnSkip": {
+    "message": "Skip"
+  },
+  "btnNext": {
+    "message": "Next"
+  },
+  "btnStartFocus": {
+    "message": "Start Focus"
+  },
+  "btnStop": {
+    "message": "Stop"
+  },
+  "btnResume": {
+    "message": "Resume"
+  },
+  "btnReset": {
+    "message": "Reset"
+  },
+  "btnAdd": {
+    "message": "Add"
+  },
+  "btnBack": {
+    "message": "Back"
+  },
+  "btnResetDefaults": {
+    "message": "Reset to Defaults"
+  },
+  "btnSettings": {
+    "message": "⚙️ Settings"
+  },
+  "btnViewHistory": {
+    "message": "📊 View History"
+  },
+  "modeSimple": {
+    "message": "Simple"
+  },
+  "modeInterval": {
+    "message": "Interval"
+  },
+  "statusFocus": {
+    "message": "Focus"
+  },
+  "statusPaused": {
+    "message": "Paused"
+  },
+  "statusBreak": {
+    "message": "On Break"
+  },
+  "statusFocusSession": {
+    "message": "Focus Session"
+  },
+  "cycle": {
+    "message": "Cycle"
+  },
+  "tooltipFocusDuration": {
+    "message": "Work duration (minutes)"
+  },
+  "tooltipBreakDuration": {
+    "message": "Break duration (minutes)"
+  },
+  "tooltipCycles": {
+    "message": "Number of repetitions"
+  },
+  "historyTitle": {
+    "message": "History"
+  },
+  "statsSessionsToday": {
+    "message": "Sessions today"
+  },
+  "statsMinutesFocus": {
+    "message": "Minutes focus"
+  },
+  "historyEmpty": {
+    "message": "No sessions yet"
+  },
+  "settingsTitle": {
+    "message": "Settings"
+  },
+  "settingsGeneralTitle": {
+    "message": "General"
+  },
+  "settingTabTitle": {
+    "message": "Show timer in tab title"
+  },
+  "settingModeLabel": {
+    "message": "Mode"
+  },
+  "modeBlacklist": {
+    "message": "Blocklisted Sites"
+  },
+  "modeWhitelist": {
+    "message": "Whitelisted Sites"
+  },
+  "settingTempAccessLimit": {
+    "message": "Temp Access Limit (daily)"
+  },
+  "settingScheduleBlocking": {
+    "message": "Schedule Blocking"
+  },
+  "settingActiveDays": {
+    "message": "Active Days"
+  },
+  "settingStart": {
+    "message": "Start"
+  },
+  "settingEnd": {
+    "message": "End"
+  },
+  "settingTheme": {
+    "message": "Theme"
+  },
+  "themeSystem": {
+    "message": "System"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "titleBlockedSites": {
+    "message": "Blocked Sites"
+  },
+  "titleWhitelistedSites": {
+    "message": "Whitelisted Sites"
+  },
+  "placeholderAddSite": {
+    "message": "e.g., tiktok.com"
+  },
+  "emptyBlockedSites": {
+    "message": "No blocked sites"
+  },
+  "emptyWhitelistedSites": {
+    "message": "No whitelisted sites"
+  },
+  "confirmResetBlacklist": {
+    "message": "Reset to default blocked sites?"
+  },
+  "confirmResetWhitelist": {
+    "message": "Clear whitelist?"
+  },
+  "badgeFirstStepName": {
+    "message": "First Step"
+  },
+  "badgeFirstStepDesc": {
+    "message": "Complete your first minute of focus"
+  },
+  "badgeFocusNoviceName": {
+    "message": "Focus Novice"
+  },
+  "badgeFocusNoviceDesc": {
+    "message": "Reach Level 2"
+  },
+  "badgeFocusMasterName": {
+    "message": "Focus Master"
+  },
+  "badgeFocusMasterDesc": {
+    "message": "Reach Level 10"
+  },
+  "badgeUnlocked": {
+    "message": "Unlocked"
+  },
+  "badgeLocked": {
+    "message": "Locked"
+  },
+  "levelPrefix": {
+    "message": "Lvl"
+  }
+}

@@ -17,6 +17,8 @@ export enum BlockingMode {
   WHITELIST = 'WHITELIST'
 }
 
+export type Theme = 'light' | 'dark' | 'system';
+
 export interface IntervalConfig {
   focusDuration: number;
   shortBreakDuration: number;
@@ -86,4 +88,5 @@ export interface UserSettings {
   schedule: ScheduleConfig;
   stats: UserStats;
   tempAccessLimit: number;
+  theme: Theme;
 }

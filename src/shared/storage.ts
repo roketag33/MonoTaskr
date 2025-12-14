@@ -4,7 +4,8 @@ import {
   Session,
   BlockingMode,
   ScheduleConfig,
-  UserStats
+  UserStats,
+  Theme
 } from './types';
 import {
   DEFAULT_BLOCKED_DOMAINS,
@@ -23,7 +24,8 @@ const KEYS = {
   SCHEDULE: 'schedule',
   STATS: 'stats',
   TEMP_OVERRIDES: 'temp_overrides',
-  TEMP_ACCESS_LIMIT: 'temp_access_limit'
+  TEMP_ACCESS_LIMIT: 'temp_access_limit',
+  THEME: 'theme'
 };
 
 export const storage = {
@@ -51,6 +53,23 @@ export const storage = {
 
   setTempAccessLimit: async (limit: number): Promise<void> => {
     await chrome.storage.local.set({ [KEYS.TEMP_ACCESS_LIMIT]: limit });
+  },
+
+  getTheme: async (): Promise<Theme> => {
+    const result = await chrome.storage.local.get(KEYS.THEME);
+    return result[KEYS.THEME] ?? DEFAULT_USER_SETTINGS.theme;
+  },
+
+  setTheme: async (theme: Theme): Promise<void> => {
+    await chrome.storage.local.set({ [KEYS.THEME]: theme });
+  },
+
+  onThemeChanged: (callback: (theme: Theme) => void) => {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === 'local' && changes[KEYS.THEME]) {
+        callback(changes[KEYS.THEME].newValue);
+      }
+    });
   },
 
   getBlockedSites: async (): Promise<string[]> => {

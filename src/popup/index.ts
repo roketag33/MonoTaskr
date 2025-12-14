@@ -3,7 +3,10 @@ import './tooltip.css';
 import { storage } from '../shared/storage';
 import { MESSAGES } from '../shared/messaging';
 import { TimerState, TimerStatus, TimerMode } from '../shared/types';
-import { GamificationService, BADGES } from '../background/gamification.service';
+import { GamificationService, getBadges } from '../background/gamification.service';
+import { ThemeManager } from './theme.manager';
+import { I18nService } from '../shared/i18n.service';
+import { Theme } from '../shared/types';
 
 // DOM Elements
 const timerDisplay = document.getElementById('timer-display')!;
@@ -52,10 +55,19 @@ const sitesList = document.getElementById('sites-list')!;
 const resetSitesBtn = document.getElementById('btn-reset-sites')!;
 const backSettingsBtn = document.getElementById('btn-back-settings')!;
 const settingTabTitle = document.getElementById('setting-tab-title')! as HTMLInputElement;
+const themeSelect = document.getElementById('theme-select')! as HTMLSelectElement;
 
 // Setting Event Listener
 settingTabTitle.addEventListener('change', async () => {
   await storage.setShowTabTitleTimer(settingTabTitle.checked);
+});
+
+themeSelect.addEventListener('change', async () => {
+  await storage.setTheme(themeSelect.value as Theme);
+});
+
+themeSelect.addEventListener('change', async () => {
+  await storage.setTheme(themeSelect.value as Theme);
 });
 
 let selectedDuration = 25;
@@ -76,13 +88,13 @@ function updateUI(state: TimerState) {
   if (state.mode === TimerMode.INTERVAL && state.status !== TimerStatus.IDLE) {
     statusDisplay.classList.remove('hidden');
     if (state.status === TimerStatus.BREAK) {
-      statusDisplay.textContent = `On Break (Cycle ${state.currentCycle}/${state.totalCycles})`;
+      statusDisplay.textContent = `${I18nService.getMessage('statusBreak')} (${I18nService.getMessage('cycle')} ${state.currentCycle}/${state.totalCycles})`;
       statusDisplay.style.color = 'green';
     } else if (state.status === TimerStatus.RUNNING) {
-      statusDisplay.textContent = `Focus Session (Cycle ${state.currentCycle}/${state.totalCycles})`;
+      statusDisplay.textContent = `${I18nService.getMessage('statusFocusSession')} (${I18nService.getMessage('cycle')} ${state.currentCycle}/${state.totalCycles})`;
       statusDisplay.style.color = '#666';
     } else {
-      statusDisplay.textContent = 'Paused';
+      statusDisplay.textContent = I18nService.getMessage('statusPaused');
     }
   } else {
     statusDisplay.classList.add('hidden');
@@ -152,7 +164,7 @@ function updateUI(state: TimerState) {
   if (state.status === TimerStatus.RUNNING || state.status === TimerStatus.BREAK) {
     startBtn.classList.add('hidden');
     stopBtn.classList.remove('hidden');
-    stopBtn.textContent = 'Stop'; // Simplified: Stop always resets for now or we add Pause logic later
+    stopBtn.textContent = I18nService.getMessage('btnStop');
     // Note: In previous step I saw 'Pause' text content logic, sticking to Stop for Interval MVP or adapting
     resetBtn.classList.remove('hidden');
 
@@ -163,14 +175,14 @@ function updateUI(state: TimerState) {
     }
   } else if (state.status === TimerStatus.PAUSED) {
     startBtn.classList.remove('hidden');
-    startBtn.textContent = 'Resume';
+    startBtn.textContent = I18nService.getMessage('btnResume');
     stopBtn.classList.add('hidden');
     resetBtn.classList.remove('hidden');
     timerDisplay.style.color = '';
   } else {
     // IDLE or COMPLETED
     startBtn.classList.remove('hidden');
-    startBtn.textContent = 'Start Focus';
+    startBtn.textContent = I18nService.getMessage('btnStartFocus');
     stopBtn.classList.add('hidden');
     resetBtn.classList.add('hidden');
     timerDisplay.style.color = '';
@@ -279,19 +291,18 @@ historyBtn.addEventListener('click', async () => {
   statsContainer.innerHTML = `
         <div class="stat-box">
             <span class="stat-value">${stats.count}</span>
-            <span class="stat-label">Sessions today</span>
+            <span class="stat-label">${I18nService.getMessage('statsSessionsToday')}</span>
         </div>
         <div class="stat-box">
             <span class="stat-value">${stats.totalMinutes}</span>
-            <span class="stat-label">Minutes focus</span>
+            <span class="stat-label">${I18nService.getMessage('statsMinutesFocus')}</span>
         </div>
     `;
 
   historyList.innerHTML = '';
 
   if (sessions.length === 0) {
-    historyList.innerHTML =
-      '<li class="history-item" style="justify-content: center; color: #999;">No sessions yet</li>';
+    historyList.innerHTML = `<li class="history-item" style="justify-content: center; color: #999;">${I18nService.getMessage('historyEmpty')}</li>`;
   } else {
     sessions.forEach((session) => {
       const date = new Date(session.timestamp);
@@ -358,14 +369,16 @@ async function renderSitesList() {
 
   // Update title
   sitesListTitle.textContent =
-    mode === BlockingMode.BLACKLIST ? 'Blocked Sites' : 'Whitelisted Sites';
+    mode === BlockingMode.BLACKLIST
+      ? I18nService.getMessage('titleBlockedSites')
+      : I18nService.getMessage('titleWhitelistedSites');
 
   sitesList.innerHTML = '';
 
   // Show empty state if needed
   if (sites.length === 0) {
     sitesList.innerHTML = `<li class="site-item" style="justify-content:center; color:#888; font-style:italic;">
-            ${mode === BlockingMode.BLACKLIST ? 'No blocked sites' : 'No whitelisted sites'}
+            ${mode === BlockingMode.BLACKLIST ? I18nService.getMessage('emptyBlockedSites') : I18nService.getMessage('emptyWhitelistedSites')}
         </li>`;
   }
 
@@ -547,7 +560,9 @@ resetSitesBtn.addEventListener('click', async () => {
   const mode = (document.querySelector('input[name="blocking-mode"]:checked') as HTMLInputElement)
     .value as BlockingMode;
   const msg =
-    mode === BlockingMode.BLACKLIST ? 'Reset to default blocked sites?' : 'Clear whitelist?';
+    mode === BlockingMode.BLACKLIST
+      ? I18nService.getMessage('confirmResetBlacklist')
+      : I18nService.getMessage('confirmResetWhitelist');
 
   if (confirm(msg)) {
     if (mode === BlockingMode.BLACKLIST) {
@@ -622,24 +637,28 @@ startOnboardingBtn.addEventListener('click', completeOnboarding);
 async function renderGamification() {
   const stats = await storage.getUserStats();
 
-  levelBadge.textContent = `Lvl ${stats.level}`;
-  xpText.textContent = `${stats.xp} XP`;
+  levelBadge.textContent = `${I18nService.getMessage('levelPrefix')} ${stats.level}`;
+  xpText.textContent = `${stats.xp} XP`; // 'XP' not in messages, but universal enough? 'XP' is usually standard.
 
   const progress = GamificationService.getProgress(stats.xp, stats.level);
   xpProgress.style.width = `${progress}%`;
 
   badgesContainer.innerHTML = '';
-  if (BADGES.length > 0) {
+  const badges = getBadges();
+  if (badges.length > 0) {
     badgesContainer.parentElement!.classList.remove('hidden'); // Ensure container visible if badges exist
   }
 
-  BADGES.forEach((badge) => {
+  badges.forEach((badge) => {
     const isUnlocked = stats.badges.includes(badge.id);
     const badgeEl = document.createElement('div');
     badgeEl.className = 'badge-item';
     badgeEl.innerHTML = badge.icon;
     badgeEl.title =
-      `${badge.name}: ${badge.description}` + (isUnlocked ? ' (Unlocked)' : ' (Locked)');
+      `${badge.name}: ${badge.description}` +
+      (isUnlocked
+        ? ` (${I18nService.getMessage('badgeUnlocked')})`
+        : ` (${I18nService.getMessage('badgeLocked')})`);
     badgeEl.style.fontSize = '1.5rem';
     badgeEl.style.cursor = 'help';
     badgeEl.style.opacity = isUnlocked ? '1' : '0.3';
@@ -650,6 +669,13 @@ async function renderGamification() {
 
 // Init
 (async () => {
+  // Init I18n
+  I18nService.init();
+
+  // Init Theme
+  await ThemeManager.init();
+  themeSelect.value = await storage.getTheme();
+
   const onboardingCompleted = await storage.getOnboardingCompleted();
 
   if (!onboardingCompleted) {

@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "MonoTaskr"
+  },
+  "appDescription": {
+    "message": "Fokus-Timer und Ablenkungsblocker"
+  },
+  "onboardingWelcomeTitle": {
+    "message": "Willkommen bei MonoTaskr"
+  },
+  "onboardingWelcomeText": {
+    "message": "Konzentriere dich auf das Wesentliche. Wir helfen dir, im Fokus zu bleiben, indem wir Ablenkungen blockieren."
+  },
+  "onboardingBlockTitle": {
+    "message": "Ablenkungen Blockieren"
+  },
+  "onboardingBlockText": {
+    "message": "Wir blockieren Seiten wie YouTube, Facebook und Reddit, während du arbeitest."
+  },
+  "onboardingReadyTitle": {
+    "message": "Bereit zum Fokussieren?"
+  },
+  "onboardingReadyText": {
+    "message": "Starte deine erste 25-Minuten-Sitzung und sieh den Unterschied."
+  },
+  "btnSkip": {
+    "message": "Überspringen"
+  },
+  "btnNext": {
+    "message": "Weiter"
+  },
+  "btnStartFocus": {
+    "message": "Starten"
+  },
+  "btnStop": {
+    "message": "Stopp"
+  },
+  "btnResume": {
+    "message": "Fortsetzen"
+  },
+  "btnReset": {
+    "message": "Zurücksetzen"
+  },
+  "btnAdd": {
+    "message": "Hinzufügen"
+  },
+  "btnBack": {
+    "message": "Zurück"
+  },
+  "btnResetDefaults": {
+    "message": "Auf Standard zurücksetzen"
+  },
+  "btnSettings": {
+    "message": "⚙️ Einstellungen"
+  },
+  "btnViewHistory": {
+    "message": "📊 Verlauf ansehen"
+  },
+  "modeSimple": {
+    "message": "Einfach"
+  },
+  "modeInterval": {
+    "message": "Intervall"
+  },
+  "statusFocus": {
+    "message": "Fokus"
+  },
+  "statusPaused": {
+    "message": "Pausiert"
+  },
+  "statusBreak": {
+    "message": "Pause"
+  },
+  "statusFocusSession": {
+    "message": "Fokus-Sitzung"
+  },
+  "cycle": {
+    "message": "Zyklus"
+  },
+  "tooltipFocusDuration": {
+    "message": "Arbeitsdauer (Minuten)"
+  },
+  "tooltipBreakDuration": {
+    "message": "Pausendauer (Minuten)"
+  },
+  "tooltipCycles": {
+    "message": "Anzahl der Wiederholungen"
+  },
+  "historyTitle": {
+    "message": "Verlauf"
+  },
+  "statsSessionsToday": {
+    "message": "Sitzungen heute"
+  },
+  "statsMinutesFocus": {
+    "message": "Fokus-Minuten"
+  },
+  "historyEmpty": {
+    "message": "Noch keine Sitzungen"
+  },
+  "settingsTitle": {
+    "message": "Einstellungen"
+  },
+  "settingsGeneralTitle": {
+    "message": "Allgemein"
+  },
+  "settingTabTitle": {
+    "message": "Timer im Tab-Titel anzeigen"
+  },
+  "settingModeLabel": {
+    "message": "Modus"
+  },
+  "modeBlacklist": {
+    "message": "Blockliste (Gesperrte Seiten)"
+  },
+  "modeWhitelist": {
+    "message": "Allowliste (Erlaubte Seiten)"
+  },
+  "settingTempAccessLimit": {
+    "message": "Temp. Zugangslimit (täglich)"
+  },
+  "settingScheduleBlocking": {
+    "message": "Zeitplan-Blockierung"
+  },
+  "settingActiveDays": {
+    "message": "Aktive Tage"
+  },
+  "settingStart": {
+    "message": "Start"
+  },
+  "settingEnd": {
+    "message": "Ende"
+  },
+  "settingTheme": {
+    "message": "Thema"
+  },
+  "themeSystem": {
+    "message": "System"
+  },
+  "themeLight": {
+    "message": "Hell"
+  },
+  "themeDark": {
+    "message": "Dunkel"
+  },
+  "titleBlockedSites": {
+    "message": "Gesperrte Seiten"
+  },
+  "titleWhitelistedSites": {
+    "message": "Erlaubte Seiten"
+  },
+  "placeholderAddSite": {
+    "message": "z.B. tiktok.com"
+  },
+  "emptyBlockedSites": {
+    "message": "Keine gesperrten Seiten"
+  },
+  "emptyWhitelistedSites": {
+    "message": "Keine erlaubten Seiten"
+  },
+  "confirmResetBlacklist": {
+    "message": "Gesperrte Seiten auf Standard zurücksetzen?"
+  },
+  "confirmResetWhitelist": {
+    "message": "Allowliste löschen?"
+  },
+  "badgeFirstStepName": {
+    "message": "Erster Schritt"
+  },
+  "badgeFirstStepDesc": {
+    "message": "Absolviere deine erste Fokus-Minute"
+  },
+  "badgeFocusNoviceName": {
+    "message": "Fokus-Neuling"
+  },
+  "badgeFocusNoviceDesc": {
+    "message": "Erreiche Level 2"
+  },
+  "badgeFocusMasterName": {
+    "message": "Fokus-Meister"
+  },
+  "badgeFocusMasterDesc": {
+    "message": "Erreiche Level 10"
+  },
+  "badgeUnlocked": {
+    "message": "Freigeschaltet"
+  },
+  "badgeLocked": {
+    "message": "Gesperrt"
+  },
+  "levelPrefix": {
+    "message": "Lvl"
+  }
+}

@@ -1,55 +1,28 @@
-# MonoTaskr - Focus on What Matters
+Focus on What Matters
 
 MonoTaskr helps you stay productive by blocking distracting websites during focused work sessions. Set a timer, start your session, and let MonoTaskr handle the rest.
 
-## Why MonoTaskr?
+Why MonoTaskr?
 
-### 🎯 Simple Timer Controls
-
+🎯 Simple Timer Controls
 Choose from pre-set durations (25, 45, or 60 minutes) and start your focus session with one click. Pause or reset anytime.
 
-### 🚫 Smart Site Blocking
-
+🚫 Smart Site Blocking
 Automatically blocks distracting websites while you work. You can easily customize this list in the settings. No willpower needed.
 
-### 📊 Track Your Progress
-
+📊 Track Your Progress
 See your daily statistics including session count and total focus time. Review your complete session history to track improvements.
 
-### ⚙️ Fully Customizable
-
+⚙️ Fully Customizable
 Add or remove websites from the block list to match your personal distractions. Your settings are saved locally.
 
-### 💾 Privacy-First
-
+💾 Privacy-First
 All your data stays on your device. MonoTaskr uses local storage only - no accounts, no servers, no tracking.
 
-### ✨ Clean & Minimal
+✨ Clean & Minimal
+Beautiful, distraction-free interface that stays out of your way. Dark theme by default for comfortable viewing.
 
-Beautiful, distraction-free interface that stays out of your way.
-
-### 🎮 Gamification
-
-Level up your productivity! Earn XP for every minute of focus, unlock badges, and track your levels. Make focusing fun.
-
-### 🎨 Color Themes
-
-Customize your experience with Light, Dark, or System themes.
-
-### 📅 Scheduled Blocking
-
-Set specific days and times for automatic blocking. Perfect for work hours or study schedules.
-
-### 🔓 Temporary Access
-
-Need a quick file? Use the "1-minute access" shortcut on blocked pages (limited daily uses).
-
-### ☕ Flexible Break Mode
-
-Take a breather without stopping your flow. Switch to Break mode to temporarily unblock sites while keeping your session active.
-
-## Features at a Glance
-
+Features at a Glance
 ✅ One-click timer start/pause/reset
 ✅ Pre-configured block list of popular distractions
 ✅ Custom site blocking

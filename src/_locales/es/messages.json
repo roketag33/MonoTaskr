@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "MonoTaskr"
+  },
+  "appDescription": {
+    "message": "Temporizador de enfoque y bloqueador de distracciones"
+  },
+  "onboardingWelcomeTitle": {
+    "message": "Bienvenido a MonoTaskr"
+  },
+  "onboardingWelcomeText": {
+    "message": "Concéntrate en lo importante. Te ayudamos a mantener el enfoque bloqueando distracciones."
+  },
+  "onboardingBlockTitle": {
+    "message": "Bloquea Distracciones"
+  },
+  "onboardingBlockText": {
+    "message": "Bloqueamos sitios como YouTube, Facebook y Reddit mientras trabajas."
+  },
+  "onboardingReadyTitle": {
+    "message": "Listo para enfocar?"
+  },
+  "onboardingReadyText": {
+    "message": "Inicia tu primera sesión de 25 minutos ahora y nota la diferencia."
+  },
+  "btnSkip": {
+    "message": "Omitir"
+  },
+  "btnNext": {
+    "message": "Siguiente"
+  },
+  "btnStartFocus": {
+    "message": "Iniciar"
+  },
+  "btnStop": {
+    "message": "Detener"
+  },
+  "btnResume": {
+    "message": "Reanudar"
+  },
+  "btnReset": {
+    "message": "Reiniciar"
+  },
+  "btnAdd": {
+    "message": "Añadir"
+  },
+  "btnBack": {
+    "message": "Volver"
+  },
+  "btnResetDefaults": {
+    "message": "Restaurar valores"
+  },
+  "btnSettings": {
+    "message": "⚙️ Ajustes"
+  },
+  "btnViewHistory": {
+    "message": "📊 Ver Historial"
+  },
+  "modeSimple": {
+    "message": "Simple"
+  },
+  "modeInterval": {
+    "message": "Intervalo"
+  },
+  "statusFocus": {
+    "message": "Enfoque"
+  },
+  "statusPaused": {
+    "message": "Pausado"
+  },
+  "statusBreak": {
+    "message": "Descanso"
+  },
+  "statusFocusSession": {
+    "message": "Sesión de Enfoque"
+  },
+  "cycle": {
+    "message": "Ciclo"
+  },
+  "tooltipFocusDuration": {
+    "message": "Duración del trabajo (minutos)"
+  },
+  "tooltipBreakDuration": {
+    "message": "Duración del descanso (minutos)"
+  },
+  "tooltipCycles": {
+    "message": "Número de repeticiones"
+  },
+  "historyTitle": {
+    "message": "Historial"
+  },
+  "statsSessionsToday": {
+    "message": "Sesiones hoy"
+  },
+  "statsMinutesFocus": {
+    "message": "Minutos de enfoque"
+  },
+  "historyEmpty": {
+    "message": "Aún no hay sesiones"
+  },
+  "settingsTitle": {
+    "message": "Ajustes"
+  },
+  "settingsGeneralTitle": {
+    "message": "General"
+  },
+  "settingTabTitle": {
+    "message": "Mostrar temporizador en la pestaña"
+  },
+  "settingModeLabel": {
+    "message": "Modo"
+  },
+  "modeBlacklist": {
+    "message": "Lista Negra (Sitios Bloqueados)"
+  },
+  "modeWhitelist": {
+    "message": "Lista Blanca (Sitios Permitidos)"
+  },
+  "settingTempAccessLimit": {
+    "message": "Límite de Acceso Temporal (diario)"
+  },
+  "settingScheduleBlocking": {
+    "message": "Bloqueo Programado"
+  },
+  "settingActiveDays": {
+    "message": "Días Activos"
+  },
+  "settingStart": {
+    "message": "Inicio"
+  },
+  "settingEnd": {
+    "message": "Fin"
+  },
+  "settingTheme": {
+    "message": "Tema"
+  },
+  "themeSystem": {
+    "message": "Sistema"
+  },
+  "themeLight": {
+    "message": "Claro"
+  },
+  "themeDark": {
+    "message": "Oscuro"
+  },
+  "titleBlockedSites": {
+    "message": "Sitios Bloqueados"
+  },
+  "titleWhitelistedSites": {
+    "message": "Sitios Permitidos"
+  },
+  "placeholderAddSite": {
+    "message": "ej: tiktok.com"
+  },
+  "emptyBlockedSites": {
+    "message": "No hay sitios bloqueados"
+  },
+  "emptyWhitelistedSites": {
+    "message": "No hay sitios permitidos"
+  },
+  "confirmResetBlacklist": {
+    "message": "¿Restablecer sitios bloqueados por defecto?"
+  },
+  "confirmResetWhitelist": {
+    "message": "¿Borrar lista blanca?"
+  },
+  "badgeFirstStepName": {
+    "message": "Primer Paso"
+  },
+  "badgeFirstStepDesc": {
+    "message": "Completa tu primer minuto de enfoque"
+  },
+  "badgeFocusNoviceName": {
+    "message": "Novato del Enfoque"
+  },
+  "badgeFocusNoviceDesc": {
+    "message": "Alcanza el Nivel 2"
+  },
+  "badgeFocusMasterName": {
+    "message": "Maestro del Enfoque"
+  },
+  "badgeFocusMasterDesc": {
+    "message": "Alcanza el Nivel 10"
+  },
+  "badgeUnlocked": {
+    "message": "Desbloqueado"
+  },
+  "badgeLocked": {
+    "message": "Bloqueado"
+  },
+  "levelPrefix": {
+    "message": "Nvl"
+  }
+}
