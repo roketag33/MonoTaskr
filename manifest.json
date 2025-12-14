@@ -4,10 +4,7 @@
   "version": "0.0.3",
   "default_locale": "en",
   "description": "MonoTaskr helps you stay productive by blocking distracting websites during focused work sessions.",
-  "permissions": [
-    "storage",
-    "alarms"
-  ],
+  "permissions": ["storage", "alarms"],
   "action": {
     "default_popup": "src/popup/index.html"
   },
@@ -17,12 +14,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "src/content/index.ts"
-      ],
+      "matches": ["<all_urls>"],
+      "js": ["src/content/index.ts"],
       "run_at": "document_start"
     }
   ]

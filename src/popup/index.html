@@ -1,331 +1,277 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MonoTaskr</title>
-    <link rel="stylesheet" href="./index.css" />
-  </head>
 
-  <body>
-    <div id="onboarding-view" class="hidden">
-      <div class="slide active" data-slide="1">
-        <h2 data-i18n="onboardingWelcomeTitle">Welcome to MonoTaskr</h2>
-        <p data-i18n="onboardingWelcomeText">
-          Focus on what matters. We help you stay in the zone by blocking distractions.
-        </p>
-        <div class="illustration">🎯</div>
-      </div>
-      <div class="slide" data-slide="2">
-        <h2 data-i18n="onboardingBlockTitle">Block Distractions</h2>
-        <p data-i18n="onboardingBlockText">
-          We block sites like YouTube, Facebook, and Reddit while you focus.
-        </p>
-        <ul class="blocked-list">
-          <li>📺 YouTube</li>
-          <li>📘 Facebook</li>
-          <li>🐦 Twitter</li>
-          <li>📸 Instagram</li>
-        </ul>
-      </div>
-      <div class="slide" data-slide="3">
-        <h2 data-i18n="onboardingReadyTitle">Ready to Focus?</h2>
-        <p data-i18n="onboardingReadyText">
-          Start your first 25-minute session now and see the difference.
-        </p>
-        <div class="illustration">🚀</div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MonoTaskr</title>
+  <link rel="stylesheet" href="./index.css" />
+</head>
 
-      <div class="onboarding-controls">
-        <div class="dots">
-          <span class="dot active" data-slide="1"></span>
-          <span class="dot" data-slide="2"></span>
-          <span class="dot" data-slide="3"></span>
-        </div>
-        <div class="buttons">
-          <button id="btn-skip" class="text-btn" data-i18n="btnSkip">Skip</button>
-          <button id="btn-next" class="primary-btn" data-i18n="btnNext">Next</button>
-          <button id="btn-start-onboarding" class="primary-btn hidden" data-i18n="btnStartFocus">
-            Start Focus
-          </button>
-        </div>
-      </div>
+<body>
+  <div id="onboarding-view" class="hidden">
+    <div class="slide active" data-slide="1">
+      <h2 data-i18n="onboardingWelcomeTitle">Welcome to MonoTaskr</h2>
+      <p data-i18n="onboardingWelcomeText">
+        Focus on what matters. We help you stay in the zone by blocking distractions.
+      </p>
+      <div class="illustration">🎯</div>
+    </div>
+    <div class="slide" data-slide="2">
+      <h2 data-i18n="onboardingBlockTitle">Block Distractions</h2>
+      <p data-i18n="onboardingBlockText">
+        We block sites like YouTube, Facebook, and Reddit while you focus.
+      </p>
+      <ul class="blocked-list">
+        <li>📺 YouTube</li>
+        <li>📘 Facebook</li>
+        <li>🐦 Twitter</li>
+        <li>📸 Instagram</li>
+      </ul>
+    </div>
+    <div class="slide" data-slide="3">
+      <h2 data-i18n="onboardingReadyTitle">Ready to Focus?</h2>
+      <p data-i18n="onboardingReadyText">
+        Start your first 25-minute session now and see the difference.
+      </p>
+      <div class="illustration">🚀</div>
     </div>
 
-    <div id="app" class="hidden">
-      <header>
-        <h1 data-i18n="appName">MonoTaskr</h1>
-      </header>
+    <div class="onboarding-controls">
+      <div class="dots">
+        <span class="dot active" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
+        <span class="dot" data-slide="3"></span>
+      </div>
+      <div class="buttons">
+        <button id="btn-skip" class="text-btn" data-i18n="btnSkip">Skip</button>
+        <button id="btn-next" class="primary-btn" data-i18n="btnNext">Next</button>
+        <button id="btn-start-onboarding" class="primary-btn hidden" data-i18n="btnStartFocus">
+          Start Focus
+        </button>
+      </div>
+    </div>
+  </div>
 
-      <main>
-        <div id="timer-display">25:00</div>
-        <div
-          id="status-display"
-          class="hidden"
-          style="text-align: center; color: #666; margin-bottom: 10px"
-          data-i18n="statusFocus"
-        >
-          Focus
-        </div>
+  <div id="app" class="hidden">
+    <header>
+      <h1 data-i18n="appName">MonoTaskr</h1>
+    </header>
 
-        <div
-          class="timer-mode-toggles"
-          style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px"
-        >
-          <button
-            id="mode-btn-simple"
-            class="text-btn active"
-            style="font-size: 0.9rem"
-            data-i18n="modeSimple"
-          >
-            Simple
-          </button>
-          <button
-            id="mode-btn-interval"
-            class="text-btn"
-            style="font-size: 0.9rem"
-            data-i18n="modeInterval"
-          >
-            Interval
-          </button>
-        </div>
+    <main>
+      <div id="timer-display">25:00</div>
+      <div id="status-display" class="hidden" style="text-align: center; color: #666; margin-bottom: 10px"
+        data-i18n="statusFocus">
+        Focus
+      </div>
 
-        <div id="controls-simple" class="controls-group">
-          <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
-          <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
-          <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
-        </div>
+      <div class="timer-mode-toggles" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px">
+        <button id="mode-btn-simple" class="text-btn active" style="font-size: 0.9rem" data-i18n="modeSimple">
+          Simple
+        </button>
+        <button id="mode-btn-interval" class="text-btn" style="font-size: 0.9rem" data-i18n="modeInterval">
+          Interval
+        </button>
+      </div>
 
-        <div
-          id="controls-interval"
-          class="controls-group hidden"
-          style="flex-direction: column; gap: 10px"
-        >
-          <div style="display: flex; gap: 10px; justify-content: center">
-            <div style="display: flex; flex-direction: column; align-items: center">
-              <label style="font-size: 0.8rem; display: flex; align-items: center">
-                Focus
-                <div class="tooltip-container">
-                  <span class="info-icon">i</span>
-                  <span class="tooltip-text" data-i18n="tooltipFocusDuration"
-                    >Durée de travail (minutes)</span
-                  >
-                </div>
-              </label>
-              <input
-                type="number"
-                id="interval-focus"
-                value="25"
-                min="1"
-                style="width: 50px; text-align: center; padding: 5px"
-              />
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center">
-              <label style="font-size: 0.8rem; display: flex; align-items: center">
-                Break
-                <div class="tooltip-container">
-                  <span class="info-icon">i</span>
-                  <span class="tooltip-text" data-i18n="tooltipBreakDuration"
-                    >Durée de la pause (minutes)</span
-                  >
-                </div>
-              </label>
-              <input
-                type="number"
-                id="interval-break"
-                value="5"
-                min="1"
-                style="width: 50px; text-align: center; padding: 5px"
-              />
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center">
-              <label style="font-size: 0.8rem; display: flex; align-items: center">
-                Cycles
-                <div class="tooltip-container">
-                  <span class="info-icon">i</span>
-                  <span class="tooltip-text" data-i18n="tooltipCycles">Nombre de répétitions</span>
-                </div>
-              </label>
-              <input
-                type="number"
-                id="interval-cycles"
-                value="4"
-                min="1"
-                style="width: 50px; text-align: center; padding: 5px"
-              />
-            </div>
+      <div id="controls-simple" class="controls-group">
+        <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
+        <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
+        <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+      </div>
+
+      <div id="controls-interval" class="controls-group hidden" style="flex-direction: column; gap: 10px">
+        <div style="display: flex; gap: 10px; justify-content: center">
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <label style="font-size: 0.8rem; display: flex; align-items: center">
+              Focus
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text" data-i18n="tooltipFocusDuration">Durée de travail (minutes)</span>
+              </div>
+            </label>
+            <input type="number" id="interval-focus" value="25" min="1"
+              style="width: 50px; text-align: center; padding: 5px" />
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <label style="font-size: 0.8rem; display: flex; align-items: center">
+              Break
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text" data-i18n="tooltipBreakDuration">Durée de la pause (minutes)</span>
+              </div>
+            </label>
+            <input type="number" id="interval-break" value="5" min="1"
+              style="width: 50px; text-align: center; padding: 5px" />
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <label style="font-size: 0.8rem; display: flex; align-items: center">
+              Cycles
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text" data-i18n="tooltipCycles">Nombre de répétitions</span>
+              </div>
+            </label>
+            <input type="number" id="interval-cycles" value="4" min="1"
+              style="width: 50px; text-align: center; padding: 5px" />
           </div>
         </div>
+      </div>
 
-        <div
-          class="gamification-container"
-          style="margin: 20px 0; padding: 10px; background: whitesmoke; border-radius: 8px"
-        >
-          <div
-            class="stats-row"
-            style="display: flex; justify-content: space-between; margin-bottom: 5px"
-          >
-            <span id="level-badge" style="font-weight: bold; color: #4caf50">Lvl 1</span>
-            <span id="xp-text" style="font-size: 0.9rem; color: #666">0 XP</span>
+      <div class="gamification-container"
+        style="margin: 20px 0; padding: 10px; background: whitesmoke; border-radius: 8px">
+        <div class="stats-row" style="display: flex; justify-content: space-between; margin-bottom: 5px">
+          <span id="level-badge" style="font-weight: bold; color: #4caf50">Lvl 1</span>
+          <span id="xp-text" style="font-size: 0.9rem; color: #666">0 XP</span>
+        </div>
+        <div class="progress-bar-bg"
+          style="width: 100%; height: 8px; background: #ddd; border-radius: 4px; overflow: hidden">
+          <div id="xp-progress" style="width: 0%; height: 100%; background: #4caf50; transition: width 0.5s ease-out">
           </div>
-          <div
-            class="progress-bar-bg"
-            style="width: 100%; height: 8px; background: #ddd; border-radius: 4px; overflow: hidden"
-          >
-            <div
-              id="xp-progress"
-              style="width: 0%; height: 100%; background: #4caf50; transition: width 0.5s ease-out"
-            ></div>
-          </div>
-          <div
-            id="badges-container"
-            style="
+        </div>
+        <div id="badges-container" style="
               margin-top: 10px;
               display: flex;
               gap: 5px;
               flex-wrap: wrap;
               justify-content: center;
-            "
-          >
-            <!-- Badges injected here -->
+            ">
+          <!-- Badges injected here -->
+        </div>
+      </div>
+
+      <div id="actions" class="actions-group">
+        <button id="btn-start" class="primary-btn" data-i18n="btnStartFocus">Start Focus</button>
+        <button id="btn-stop" class="secondary-btn hidden" data-i18n="btnStop">Stop</button>
+        <button id="btn-reset" class="danger-btn hidden" data-i18n="btnReset">Reset</button>
+      </div>
+
+      <div id="history-view" class="hidden">
+        <h2 data-i18n="historyTitle">History</h2>
+        <div id="daily-stats" class="stats-container">
+          <!-- Stats will be injected here -->
+        </div>
+        <ul id="history-list"></ul>
+        <button id="btn-back" class="secondary-btn" data-i18n="btnBack">Back</button>
+      </div>
+
+      <div id="settings-view" class="hidden">
+        <h2 data-i18n="settingsTitle">Settings</h2>
+
+        <div class="settings-section">
+          <h3 data-i18n="settingsGeneralTitle">General</h3>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="setting-tab-title" />
+              <span data-i18n="settingTabTitle">Show timer in tab title</span>
+            </label>
           </div>
-        </div>
-
-        <div id="actions" class="actions-group">
-          <button id="btn-start" class="primary-btn" data-i18n="btnStartFocus">Start Focus</button>
-          <button id="btn-stop" class="secondary-btn hidden" data-i18n="btnStop">Stop</button>
-          <button id="btn-reset" class="danger-btn hidden" data-i18n="btnReset">Reset</button>
-        </div>
-
-        <div id="history-view" class="hidden">
-          <h2 data-i18n="historyTitle">History</h2>
-          <div id="daily-stats" class="stats-container">
-            <!-- Stats will be injected here -->
+          <div class="setting-item">
+            <label for="blocking-mode" data-i18n="settingModeLabel">Mode</label>
+            <select id="blocking-mode">
+              <option value="blacklist" data-i18n="modeBlacklist">Blocklisted Sites</option>
+              <option value="whitelist" data-i18n="modeWhitelist">Whitelisted Sites</option>
+            </select>
           </div>
-          <ul id="history-list"></ul>
-          <button id="btn-back" class="secondary-btn" data-i18n="btnBack">Back</button>
-        </div>
 
-        <div id="settings-view" class="hidden">
-          <h2 data-i18n="settingsTitle">Settings</h2>
+          <div class="setting-item">
+            <label for="theme-select" data-i18n="settingTheme">Theme</label>
+            <select id="theme-select">
+              <option value="system" data-i18n="themeSystem">System</option>
+              <option value="light" data-i18n="themeLight">Light</option>
+              <option value="dark" data-i18n="themeDark">Dark</option>
+            </select>
+          </div>
 
-          <div class="settings-section">
-            <h3 data-i18n="settingsGeneralTitle">General</h3>
-            <div class="setting-item">
-              <label>
-                <input type="checkbox" id="setting-tab-title" />
-                <span data-i18n="settingTabTitle">Show timer in tab title</span>
+          <div class="setting-item">
+            <label for="temp-access-limit" data-i18n="settingTempAccessLimit">Temp Access Limit (daily)</label>
+            <input type="number" id="temp-access-limit" min="0" max="10" style="width: 50px; padding: 5px" />
+          </div>
+
+          <div class="setting-item">
+            <div class="row" style="align-items: center; justify-content: space-between">
+              <label data-i18n="settingScheduleBlocking">Schedule Blocking</label>
+              <label class="switch">
+                <input type="checkbox" id="schedule-enabled" />
+                <span class="slider round"></span>
               </label>
             </div>
-            <div class="setting-item">
-              <label for="blocking-mode" data-i18n="settingModeLabel">Mode</label>
-              <select id="blocking-mode">
-                <option value="blacklist" data-i18n="modeBlacklist">Blocklisted Sites</option>
-                <option value="whitelist" data-i18n="modeWhitelist">Whitelisted Sites</option>
-              </select>
-            </div>
+          </div>
 
+          <div id="schedule-options" class="hidden">
             <div class="setting-item">
-              <label for="temp-access-limit" data-i18n="settingTempAccessLimit"
-                >Temp Access Limit (daily)</label
-              >
-              <input
-                type="number"
-                id="temp-access-limit"
-                min="0"
-                max="10"
-                style="width: 50px; padding: 5px"
-              />
-            </div>
-
-            <div class="setting-item">
-              <div class="row" style="align-items: center; justify-content: space-between">
-                <label data-i18n="settingScheduleBlocking">Schedule Blocking</label>
-                <label class="switch">
-                  <input type="checkbox" id="schedule-enabled" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-
-            <div id="schedule-options" class="hidden">
-              <div class="setting-item">
-                <label data-i18n="settingActiveDays">Active Days</label>
-                <div class="days-selector">
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-1" data-day="1" checked />
-                    <label for="day-1">M</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-2" data-day="2" checked />
-                    <label for="day-2">T</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-3" data-day="3" checked />
-                    <label for="day-3">W</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-4" data-day="4" checked />
-                    <label for="day-4">T</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-5" data-day="5" checked />
-                    <label for="day-5">F</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-6" data-day="6" />
-                    <label for="day-6">S</label>
-                  </div>
-                  <div class="day-checkbox">
-                    <input type="checkbox" id="day-0" data-day="0" />
-                    <label for="day-0">S</label>
-                  </div>
+              <label data-i18n="settingActiveDays">Active Days</label>
+              <div class="days-selector">
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-1" data-day="1" checked />
+                  <label for="day-1">M</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-2" data-day="2" checked />
+                  <label for="day-2">T</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-3" data-day="3" checked />
+                  <label for="day-3">W</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-4" data-day="4" checked />
+                  <label for="day-4">T</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-5" data-day="5" checked />
+                  <label for="day-5">F</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-6" data-day="6" />
+                  <label for="day-6">S</label>
+                </div>
+                <div class="day-checkbox">
+                  <input type="checkbox" id="day-0" data-day="0" />
+                  <label for="day-0">S</label>
                 </div>
               </div>
-              <div class="setting-item">
-                <div class="row">
-                  <div class="col">
-                    <label for="schedule-start" data-i18n="settingStart">Start</label>
-                    <input type="time" id="schedule-start" value="09:00" />
-                  </div>
-                  <div class="col">
-                    <label for="schedule-end" data-i18n="settingEnd">End</label>
-                    <input type="time" id="schedule-end" value="17:00" />
-                  </div>
+            </div>
+            <div class="setting-item">
+              <div class="row">
+                <div class="col">
+                  <label for="schedule-start" data-i18n="settingStart">Start</label>
+                  <input type="time" id="schedule-start" value="09:00" />
+                </div>
+                <div class="col">
+                  <label for="schedule-end" data-i18n="settingEnd">End</label>
+                  <input type="time" id="schedule-end" value="17:00" />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="settings-section">
-            <h3 id="sites-list-title" data-i18n="titleBlockedSites">Blocked Sites</h3>
-            <div class="add-site-form">
-              <input
-                type="text"
-                id="site-input"
-                placeholder="e.g., tiktok.com"
-                data-i18n="placeholderAddSite"
-              />
-              <button id="btn-add-site" class="primary-btn" data-i18n="btnAdd">Add</button>
-            </div>
-            <ul id="sites-list"></ul>
-            <div class="settings-actions">
-              <button id="btn-reset-sites" class="danger-btn" data-i18n="btnResetDefaults">
-                Reset to Defaults
-              </button>
-              <button id="btn-back-settings" class="secondary-btn" data-i18n="btnBack">Back</button>
-            </div>
+        <div class="settings-section">
+          <h3 id="sites-list-title" data-i18n="titleBlockedSites">Blocked Sites</h3>
+          <div class="add-site-form">
+            <input type="text" id="site-input" placeholder="e.g., tiktok.com" data-i18n="placeholderAddSite" />
+            <button id="btn-add-site" class="primary-btn" data-i18n="btnAdd">Add</button>
+          </div>
+          <ul id="sites-list"></ul>
+          <div class="settings-actions">
+            <button id="btn-reset-sites" class="danger-btn" data-i18n="btnResetDefaults">
+              Reset to Defaults
+            </button>
+            <button id="btn-back-settings" class="secondary-btn" data-i18n="btnBack">Back</button>
           </div>
         </div>
+      </div>
 
-        <div class="bottom-actions">
-          <button id="btn-settings" class="text-btn" data-i18n="btnSettings">⚙️ Settings</button>
-          <button id="btn-history" class="text-btn" data-i18n="btnViewHistory">
-            📊 View History
-          </button>
-        </div>
-      </main>
-    </div>
-    <script type="module" src="./index.ts"></script>
-  </body>
+      <div class="bottom-actions">
+        <button id="btn-settings" class="text-btn" data-i18n="btnSettings">⚙️ Settings</button>
+        <button id="btn-history" class="text-btn" data-i18n="btnViewHistory">
+          📊 View History
+        </button>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="./index.ts"></script>
+</body>
+
 </html>

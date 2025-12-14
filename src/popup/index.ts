@@ -66,10 +66,6 @@ themeSelect.addEventListener('change', async () => {
   await storage.setTheme(themeSelect.value as Theme);
 });
 
-themeSelect.addEventListener('change', async () => {
-  await storage.setTheme(themeSelect.value as Theme);
-});
-
 let selectedDuration = 25;
 let selectedMode = TimerMode.SIMPLE;
 
