@@ -333,7 +333,7 @@ select {
   border: 1px solid var(--border-input);
 }
 
-.day-checkbox input:checked + label {
+.day-checkbox input:checked+label {
   background: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
@@ -367,4 +367,81 @@ select {
 
 .onboarding-controls .dot.active {
   background: var(--color-primary);
+}
+
+/* Onboarding */
+#onboarding-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.slide {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+}
+
+.slide.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.illustration {
+  font-size: 4rem;
+  margin: 20px 0;
+}
+
+.onboarding-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-input);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background: var(--color-primary);
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.buttons button {
+  flex: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
