@@ -7,6 +7,7 @@ import { GamificationService, getBadges } from '../background/gamification.servi
 import { ThemeManager } from './theme.manager';
 import { I18nService } from '../shared/i18n.service';
 import { Theme } from '../shared/types';
+import { ExportService } from '../shared/export.service';
 
 // DOM Elements
 const timerDisplay = document.getElementById('timer-display')!;
@@ -577,6 +578,41 @@ backSettingsBtn.addEventListener('click', () => {
   settingsBtn.classList.remove('hidden');
   storage.getTimerState().then(updateUI);
 });
+
+// Export Data
+const exportBtn = document.getElementById('btn-export-data');
+if (exportBtn) {
+  exportBtn.addEventListener('click', async () => {
+    try {
+      const sessions = await storage.getSessions();
+      const stats = await storage.getUserStats();
+      const settings = {
+        blockedSites: await storage.getBlockedSites(),
+        whitelistedSites: await storage.getWhitelistedSites(),
+        blockingMode: await storage.getBlockingMode(),
+        schedule: await storage.getScheduleConfig(),
+        theme: await storage.getTheme(),
+        tempAccessLimit: await storage.getTempAccessLimit(),
+        showTabTitleTimer: await storage.getShowTabTitleTimer()
+      };
+
+      const exportData = {
+        exportDate: new Date().toISOString(),
+        sessions,
+        stats,
+        settings
+      };
+
+      const json = ExportService.generateJSON(exportData);
+      const filename = `monotaskr-export-${new Date().toISOString().slice(0, 10)}.json`;
+
+      ExportService.downloadFile(json, filename, 'application/json');
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Export failed. See console for details.');
+    }
+  });
+}
 
 // Onboarding Elements
 const onboardingView = document.getElementById('onboarding-view')!;

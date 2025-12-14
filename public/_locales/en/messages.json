@@ -143,6 +143,12 @@
   "themeDark": {
     "message": "Dark"
   },
+  "settingsDataTitle": {
+    "message": "Data"
+  },
+  "btnExport": {
+    "message": "Export Data (JSON)"
+  },
   "titleBlockedSites": {
     "message": "Blocked Sites"
   },
