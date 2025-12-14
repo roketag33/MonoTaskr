@@ -16,7 +16,8 @@ const steps = [
   { name: 'Lint', command: 'npm', args: ['run', 'lint'] },
   { name: 'Typecheck', command: 'npm', args: ['run', 'typecheck'] },
   { name: 'Test', command: 'npm', args: ['test'] },
-  { name: 'Build', command: 'npm', args: ['run', 'build'] }
+  { name: 'Build', command: 'npm', args: ['run', 'build'] },
+  { name: 'E2E Tests', command: 'npm', args: ['run', 'test:e2e'] }
 ];
 
 async function runStep(step) {

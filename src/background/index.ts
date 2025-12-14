@@ -25,8 +25,13 @@ chrome.runtime.onMessage.addListener((message: MessagePayload, _sender, sendResp
       case MESSAGES.REQUEST_TEMP_ACCESS: {
         const result = await AccessService.requestTempAccess(message.payload.domain);
         sendResponse(result);
-        return; // Early return as we sent response manually with data
+        return;
       }
+      case MESSAGES.DEBUG_ACTION:
+        if (message.payload.action === 'skipTime') {
+          await timerService.skipTime(message.payload.seconds);
+        }
+        break;
     }
     sendResponse({ success: true });
   })();

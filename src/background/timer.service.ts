@@ -265,4 +265,19 @@ export class TimerService {
 
     await storage.setUserStats(stats);
   }
+  async skipTime(seconds: number) {
+    if (this.state.remainingSeconds > seconds) {
+      this.state.remainingSeconds -= seconds;
+      await this.saveState();
+      await TitleService.update(this.state.remainingSeconds);
+
+      // Award XP for skipped time as if it passed
+      await this.processGamification(Math.floor(seconds / 60));
+    } else {
+      // Skip to end
+      this.state.remainingSeconds = 0;
+      await this.saveState();
+      await this.handleAlarm({ name: ALARM_NAME } as any);
+    }
+  }
 }

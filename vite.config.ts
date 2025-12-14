@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [react(), crx({ manifest })],
   test: {
     environment: 'jsdom',
-    globals: true
+    globals: true,
+    exclude: ['e2e/**', 'node_modules/**']
   },
   server: {
     port: 5173,

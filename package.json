@@ -11,10 +11,12 @@
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
     "verify": "node scripts/verify.js"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.23",
+    "@playwright/test": "^1.57.0",
     "@types/chrome": "^0.0.263",
     "@types/jsdom": "^27.0.0",
     "@types/node": "^20.11.24",
