@@ -2,6 +2,7 @@ import { TimerState, TimerStatus, DEFAULT_TIMER_STATE, TimerMode } from '../shar
 import { storage } from '../shared/storage';
 import { TitleService } from './title.service';
 import { ScheduleService } from './schedule.service';
+import { GamificationService } from './gamification.service';
 
 const ALARM_NAME = 'monotaskr_timer_tick';
 
@@ -114,6 +115,11 @@ export class TimerService {
       this.state.remainingSeconds--;
       await this.saveState();
       await TitleService.update(this.state.remainingSeconds);
+
+      // Gamification: Award XP every minute of FOCUS
+      if (this.state.status === TimerStatus.RUNNING && this.state.remainingSeconds % 60 === 0) {
+        await this.processGamification(1);
+      }
     } else {
       // Timer Finished
       if (this.state.mode === TimerMode.SIMPLE) {
@@ -143,6 +149,8 @@ export class TimerService {
         completed: true,
         timestamp: Date.now()
       });
+
+      await this.processGamification(1);
 
       if (this.state.currentCycle >= this.state.totalCycles) {
         // All cycles done
@@ -188,6 +196,8 @@ export class TimerService {
         completed: true,
         timestamp: Date.now()
       });
+
+      await this.processGamification(1);
     }
 
     await this.saveState();
@@ -230,5 +240,29 @@ export class TimerService {
       this.state.status = TimerStatus.IDLE;
       await this.saveState();
     }
+  }
+
+  private async processGamification(minutes: number) {
+    const stats = await storage.getUserStats();
+    stats.totalFocusSeconds += minutes * 60;
+    stats.xp += minutes;
+
+    const oldLevel = stats.level;
+    const newLevel = GamificationService.calculateLevel(stats.xp);
+
+    if (newLevel > oldLevel) {
+      stats.level = newLevel;
+      this.sendNotification('Level Up! 🎉', `You reached Level ${newLevel}!`);
+    }
+
+    const newBadges = GamificationService.checkBadges(stats);
+    if (newBadges.length > 0) {
+      newBadges.forEach((badge) => {
+        stats.badges.push(badge.id);
+        this.sendNotification('Badge Unlocked! 🏆', `You unlocked: ${badge.name}`);
+      });
+    }
+
+    await storage.setUserStats(stats);
   }
 }

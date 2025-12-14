@@ -62,10 +62,28 @@ export interface ScheduleConfig {
   endTime: string; // "HH:MM" 24h format
 }
 
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  condition?: (stats: UserStats) => boolean;
+}
+
+export interface UserStats {
+  totalFocusSeconds: number;
+  xp: number;
+  level: number;
+  badges: string[];
+  dailyTempAccess: { date: string; count: number };
+}
+
 export interface UserSettings {
   blockedSites: string[];
   whitelistedSites: string[];
   blockingMode: BlockingMode;
   showTabTitleTimer: boolean;
   schedule: ScheduleConfig;
+  stats: UserStats;
+  tempAccessLimit: number;
 }

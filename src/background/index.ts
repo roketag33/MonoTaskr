@@ -1,4 +1,5 @@
 import { TimerService } from './timer.service';
+import { AccessService } from './access.service';
 import { MESSAGES, MessagePayload } from '../shared/messaging';
 
 console.log('MonoTaskr background service worker loaded.');
@@ -18,6 +19,14 @@ chrome.runtime.onMessage.addListener((message: MessagePayload, _sender, sendResp
       case MESSAGES.PAUSE_TIMER:
         await timerService.pause();
         break;
+      case MESSAGES.GET_STATUS:
+        // Implemented if needed
+        break;
+      case MESSAGES.REQUEST_TEMP_ACCESS: {
+        const result = await AccessService.requestTempAccess(message.payload.domain);
+        sendResponse(result);
+        return; // Early return as we sent response manually with data
+      }
     }
     sendResponse({ success: true });
   })();

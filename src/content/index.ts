@@ -1,11 +1,13 @@
 import { storage } from '../shared/storage';
 import { TimerStatus, TimerState, BlockingMode } from '../shared/types';
+import { MESSAGES } from '../shared/messaging';
 
 console.log('MonoTaskr content script loaded.');
 
 // Settings state
 let currentBlockedSites: string[] = [];
 let currentWhitelistedSites: string[] = [];
+let currentTempOverrides: Record<string, number> = {};
 let currentBlockingMode: BlockingMode = BlockingMode.BLACKLIST;
 let shouldBeBlocked = false;
 
@@ -14,6 +16,11 @@ let originalTitle: string | null = null;
 
 // Check if current site should be blocked based on mode and lists
 function checkBlockingStatus(hostname: string): boolean {
+  // Check overrides first
+  if (currentTempOverrides[hostname] && currentTempOverrides[hostname] > Date.now()) {
+    return false;
+  }
+
   if (currentBlockingMode === BlockingMode.BLACKLIST) {
     return currentBlockedSites.some((domain) => hostname.includes(domain));
   } else {
@@ -110,8 +117,51 @@ function initBlocking() {
         <h1>NON !</h1>
         <p>Tu devrais être en train de travailler !</p>
         <p>Ferme cet onglet tout de suite.</p>
+        <button id="btn-temp-access" style="
+            margin-top: 2rem;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        ">J'en ai besoin pour 1 min 🥺</button>
+        <p id="temp-error" style="font-size: 1rem; color: yellow; display: none;"></p>
       </div>
     `;
+
+    const btn = content.querySelector('#btn-temp-access') as HTMLButtonElement;
+    const errorMsg = content.querySelector('#temp-error') as HTMLElement;
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = 'Vérification...';
+      try {
+        const response = await chrome.runtime.sendMessage({
+          type: MESSAGES.REQUEST_TEMP_ACCESS,
+          payload: { domain: window.location.hostname }
+        });
+
+        if (response && response.authorized) {
+          // Success - Storage change will trigger unblock
+          btn.textContent = 'Autorisé !';
+        } else {
+          btn.textContent = 'Refusé';
+          errorMsg.textContent = 'Limite journalière atteinte !';
+          errorMsg.style.display = 'block';
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = "J'en ai besoin pour 1 min 🥺";
+          }, 3000);
+        }
+      } catch (_e) {
+        btn.textContent = 'Erreur';
+        btn.disabled = false;
+      }
+    });
 
     shadow.appendChild(style);
     shadow.appendChild(content);
@@ -154,15 +204,18 @@ function initBlocking() {
 // Initialize
 (async () => {
   // Load all settings
-  const [blockedSites, whitelistedSites, blockingMode] = await Promise.all([
+  // Load all settings
+  const [blockedSites, whitelistedSites, blockingMode, tempOverrides] = await Promise.all([
     storage.getBlockedSites(),
     storage.getWhitelistedSites(),
-    storage.getBlockingMode()
+    storage.getBlockingMode(),
+    storage.getTempOverrides()
   ]);
 
   currentBlockedSites = blockedSites;
   currentWhitelistedSites = whitelistedSites;
   currentBlockingMode = blockingMode;
+  currentTempOverrides = tempOverrides || {};
 
   const currentHostname = window.location.hostname;
   shouldBeBlocked = checkBlockingStatus(currentHostname);
@@ -190,6 +243,11 @@ function initBlocking() {
 
   storage.onBlockingModeChanged((newMode) => {
     currentBlockingMode = newMode;
+    updateBlockingStatus(currentHostname, updateOverlay);
+  });
+
+  storage.onTempOverridesChanged((newOverrides) => {
+    currentTempOverrides = newOverrides || {};
     updateBlockingStatus(currentHostname, updateOverlay);
   });
 })();
