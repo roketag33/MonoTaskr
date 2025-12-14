@@ -1,6 +1,7 @@
 # MonoTaskr - Chrome Web Store Listing
 
 ## Short Description (132 characters max)
+
 Block distractions and boost productivity with focused work sessions. Simple, privacy-first timer extension.
 
 **Character count: 123** ✅
@@ -62,32 +63,40 @@ Start focusing today with MonoTaskr!
 ---
 
 ## Category
+
 **Productivity**
 
 ## Language
+
 **English**
 
 ## Privacy Practices
 
 **Data Usage:**
+
 - Does NOT collect user data
 - Does NOT share user data with third parties
 - All data stored locally on user's device
 
 **Permissions:**
+
 - Storage: To save your settings and session history locally
 - Alarms: To track timer countdown
 - Notifications: To alert you when sessions complete
 - Content Scripts: To display blocking overlay on specified sites
 
 ## Support URL
+
 https://github.com/[your-username]/MonoTaskr
 
 ## Homepage URL
+
 [Your landing page URL once deployed]
 
 ## Version
+
 1.0.0
 
 ## Minimum Chrome Version
+
 88

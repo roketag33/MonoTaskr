@@ -15,14 +15,14 @@ let originalTitle: string | null = null;
 // Check if current site should be blocked based on mode and lists
 function checkBlockingStatus(hostname: string): boolean {
   if (currentBlockingMode === BlockingMode.BLACKLIST) {
-    return currentBlockedSites.some(domain => hostname.includes(domain));
+    return currentBlockedSites.some((domain) => hostname.includes(domain));
   } else {
     // Whitelist mode: Block if NOT in whitelist
     // Exception: Always allow internal pages or empty hostname
     if (!hostname) return false;
 
     // Check if hostname matches any whitelisted domain
-    const isWhitelisted = currentWhitelistedSites.some(domain => hostname.includes(domain));
+    const isWhitelisted = currentWhitelistedSites.some((domain) => hostname.includes(domain));
     return !isWhitelisted;
   }
 }
@@ -124,7 +124,10 @@ function initBlocking() {
     // The timer listener provides it.
     if (!state) return;
 
-    if (state.status === TimerStatus.RUNNING && shouldBeBlocked) {
+    if (
+      (state.status === TimerStatus.RUNNING || state.status === TimerStatus.SCHEDULED) &&
+      shouldBeBlocked
+    ) {
       if (!overlay) {
         overlay = createOverlay();
         if (document.body) {

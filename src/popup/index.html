@@ -1,172 +1,252 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MonoTaskr</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MonoTaskr</title>
-  <link rel="stylesheet" href="./index.css">
-</head>
-
-<body>
-  <div id="onboarding-view" class="hidden">
-    <div class="slide active" data-slide="1">
-      <h2>Welcome to MonoTaskr</h2>
-      <p>Focus on what matters. We help you stay in the zone by blocking distractions.</p>
-      <div class="illustration">🎯</div>
-    </div>
-    <div class="slide" data-slide="2">
-      <h2>Block Distractions</h2>
-      <p>We block sites like YouTube, Facebook, and Reddit while you focus.</p>
-      <ul class="blocked-list">
-        <li>📺 YouTube</li>
-        <li>📘 Facebook</li>
-        <li>🐦 Twitter</li>
-        <li>📸 Instagram</li>
-      </ul>
-    </div>
-    <div class="slide" data-slide="3">
-      <h2>Ready to Focus?</h2>
-      <p>Start your first 25-minute session now and see the difference.</p>
-      <div class="illustration">🚀</div>
-    </div>
-
-    <div class="onboarding-controls">
-      <div class="dots">
-        <span class="dot active" data-slide="1"></span>
-        <span class="dot" data-slide="2"></span>
-        <span class="dot" data-slide="3"></span>
+  <body>
+    <div id="onboarding-view" class="hidden">
+      <div class="slide active" data-slide="1">
+        <h2>Welcome to MonoTaskr</h2>
+        <p>Focus on what matters. We help you stay in the zone by blocking distractions.</p>
+        <div class="illustration">🎯</div>
       </div>
-      <div class="buttons">
-        <button id="btn-skip" class="text-btn">Skip</button>
-        <button id="btn-next" class="primary-btn">Next</button>
-        <button id="btn-start-onboarding" class="primary-btn hidden">Start Focus</button>
+      <div class="slide" data-slide="2">
+        <h2>Block Distractions</h2>
+        <p>We block sites like YouTube, Facebook, and Reddit while you focus.</p>
+        <ul class="blocked-list">
+          <li>📺 YouTube</li>
+          <li>📘 Facebook</li>
+          <li>🐦 Twitter</li>
+          <li>📸 Instagram</li>
+        </ul>
       </div>
-    </div>
-  </div>
-
-  <div id="app" class="hidden">
-    <header>
-      <h1>MonoTaskr</h1>
-    </header>
-
-    <main>
-      <div id="timer-display">25:00</div>
-      <div id="status-display" class="hidden" style="text-align:center; color: #666; margin-bottom: 10px;">Focus</div>
-
-      <div class="timer-mode-toggles" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
-        <button id="mode-btn-simple" class="text-btn active" style="font-size: 0.9rem;">Simple</button>
-        <button id="mode-btn-interval" class="text-btn" style="font-size: 0.9rem;">Interval</button>
+      <div class="slide" data-slide="3">
+        <h2>Ready to Focus?</h2>
+        <p>Start your first 25-minute session now and see the difference.</p>
+        <div class="illustration">🚀</div>
       </div>
 
-      <div id="controls-simple" class="controls-group">
-        <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
-        <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
-        <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+      <div class="onboarding-controls">
+        <div class="dots">
+          <span class="dot active" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
+        </div>
+        <div class="buttons">
+          <button id="btn-skip" class="text-btn">Skip</button>
+          <button id="btn-next" class="primary-btn">Next</button>
+          <button id="btn-start-onboarding" class="primary-btn hidden">Start Focus</button>
+        </div>
       </div>
+    </div>
 
-      <div id="controls-interval" class="controls-group hidden" style="flex-direction: column; gap: 10px;">
-        <div style="display: flex; gap: 10px; justify-content: center;">
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem; display: flex; align-items: center;">
-              Focus
-              <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Durée de travail (minutes)</span>
+    <div id="app" class="hidden">
+      <header>
+        <h1>MonoTaskr</h1>
+      </header>
+
+      <main>
+        <div id="timer-display">25:00</div>
+        <div
+          id="status-display"
+          class="hidden"
+          style="text-align: center; color: #666; margin-bottom: 10px"
+        >
+          Focus
+        </div>
+
+        <div
+          class="timer-mode-toggles"
+          style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px"
+        >
+          <button id="mode-btn-simple" class="text-btn active" style="font-size: 0.9rem">
+            Simple
+          </button>
+          <button id="mode-btn-interval" class="text-btn" style="font-size: 0.9rem">
+            Interval
+          </button>
+        </div>
+
+        <div id="controls-simple" class="controls-group">
+          <button id="btn-25" class="duration-btn" data-duration="25">25m</button>
+          <button id="btn-45" class="duration-btn" data-duration="45">45m</button>
+          <button id="btn-60" class="duration-btn" data-duration="60">60m</button>
+        </div>
+
+        <div
+          id="controls-interval"
+          class="controls-group hidden"
+          style="flex-direction: column; gap: 10px"
+        >
+          <div style="display: flex; gap: 10px; justify-content: center">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <label style="font-size: 0.8rem; display: flex; align-items: center">
+                Focus
+                <div class="tooltip-container">
+                  <span class="info-icon">i</span>
+                  <span class="tooltip-text">Durée de travail (minutes)</span>
+                </div>
+              </label>
+              <input
+                type="number"
+                id="interval-focus"
+                value="25"
+                min="1"
+                style="width: 50px; text-align: center; padding: 5px"
+              />
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <label style="font-size: 0.8rem; display: flex; align-items: center">
+                Break
+                <div class="tooltip-container">
+                  <span class="info-icon">i</span>
+                  <span class="tooltip-text">Durée de la pause (minutes)</span>
+                </div>
+              </label>
+              <input
+                type="number"
+                id="interval-break"
+                value="5"
+                min="1"
+                style="width: 50px; text-align: center; padding: 5px"
+              />
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <label style="font-size: 0.8rem; display: flex; align-items: center">
+                Cycles
+                <div class="tooltip-container">
+                  <span class="info-icon">i</span>
+                  <span class="tooltip-text">Nombre de répétitions</span>
+                </div>
+              </label>
+              <input
+                type="number"
+                id="interval-cycles"
+                value="4"
+                min="1"
+                style="width: 50px; text-align: center; padding: 5px"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="actions" class="actions-group">
+          <button id="btn-start" class="primary-btn">Start Focus</button>
+          <button id="btn-stop" class="secondary-btn hidden">Stop</button>
+          <button id="btn-reset" class="danger-btn hidden">Reset</button>
+        </div>
+
+        <div id="history-view" class="hidden">
+          <h2>History</h2>
+          <div id="daily-stats" class="stats-container">
+            <!-- Stats will be injected here -->
+          </div>
+          <ul id="history-list"></ul>
+          <button id="btn-back" class="secondary-btn">Back</button>
+        </div>
+
+        <div id="settings-view" class="hidden">
+          <h2>Settings</h2>
+
+          <div class="settings-section">
+            <h3>General</h3>
+            <div class="setting-item">
+              <label>
+                <input type="checkbox" id="setting-tab-title" />
+                Show timer in tab title
+              </label>
+            </div>
+            <div class="setting-item">
+              <label for="blocking-mode">Mode</label>
+              <select id="blocking-mode">
+                <option value="blacklist">Blocklisted Sites</option>
+                <option value="whitelist">Whitelisted Sites</option>
+              </select>
+            </div>
+
+            <div class="setting-item">
+              <div class="row" style="align-items: center; justify-content: space-between">
+                <label>Schedule Blocking</label>
+                <label class="switch">
+                  <input type="checkbox" id="schedule-enabled" />
+                  <span class="slider round"></span>
+                </label>
               </div>
-            </label>
-            <input type="number" id="interval-focus" value="25" min="1"
-              style="width: 50px; text-align: center; padding: 5px;">
-          </div>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem; display: flex; align-items: center;">
-              Break
-              <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Durée de la pause (minutes)</span>
+            </div>
+
+            <div id="schedule-options" class="hidden">
+              <div class="setting-item">
+                <label>Active Days</label>
+                <div class="days-selector">
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-1" data-day="1" checked />
+                    <label for="day-1">M</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-2" data-day="2" checked />
+                    <label for="day-2">T</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-3" data-day="3" checked />
+                    <label for="day-3">W</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-4" data-day="4" checked />
+                    <label for="day-4">T</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-5" data-day="5" checked />
+                    <label for="day-5">F</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-6" data-day="6" />
+                    <label for="day-6">S</label>
+                  </div>
+                  <div class="day-checkbox">
+                    <input type="checkbox" id="day-0" data-day="0" />
+                    <label for="day-0">S</label>
+                  </div>
+                </div>
               </div>
-            </label>
-            <input type="number" id="interval-break" value="5" min="1"
-              style="width: 50px; text-align: center; padding: 5px;">
-          </div>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <label style="font-size: 0.8rem; display: flex; align-items: center;">
-              Cycles
-              <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Nombre de répétitions</span>
+              <div class="setting-item">
+                <div class="row">
+                  <div class="col">
+                    <label for="schedule-start">Start</label>
+                    <input type="time" id="schedule-start" value="09:00" />
+                  </div>
+                  <div class="col">
+                    <label for="schedule-end">End</label>
+                    <input type="time" id="schedule-end" value="17:00" />
+                  </div>
+                </div>
               </div>
-            </label>
-            <input type="number" id="interval-cycles" value="4" min="1"
-              style="width: 50px; text-align: center; padding: 5px;">
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div id="actions" class="actions-group">
-        <button id="btn-start" class="primary-btn">Start Focus</button>
-        <button id="btn-stop" class="secondary-btn hidden">Stop</button>
-        <button id="btn-reset" class="danger-btn hidden">Reset</button>
-      </div>
-
-      <div id="history-view" class="hidden">
-        <h2>History</h2>
-        <div id="daily-stats" class="stats-container">
-          <!-- Stats will be injected here -->
-        </div>
-        <ul id="history-list"></ul>
-        <button id="btn-back" class="secondary-btn">Back</button>
-      </div>
-
-      <div id="settings-view" class="hidden">
-        <h2>Settings</h2>
-
-        <div class="settings-section">
-          <h3>General</h3>
-          <div class="setting-item">
-            <label>
-              <input type="checkbox" id="setting-tab-title">
-              Show timer in tab title
-            </label>
+          <div class="settings-section">
+            <h3 id="sites-list-title">Blocked Sites</h3>
+            <div class="add-site-form">
+              <input type="text" id="site-input" placeholder="e.g., tiktok.com" />
+              <button id="btn-add-site" class="primary-btn">Add</button>
+            </div>
+            <ul id="sites-list"></ul>
+            <div class="settings-actions">
+              <button id="btn-reset-sites" class="danger-btn">Reset to Defaults</button>
+              <button id="btn-back-settings" class="secondary-btn">Back</button>
+            </div>
           </div>
         </div>
 
-        <div class="settings-section">
-          <h3>Blocking Mode</h3>
-          <div class="mode-selector">
-            <label>
-              <input type="radio" name="blocking-mode" value="BLACKLIST" checked>
-              Blacklist (Block specific sites)
-            </label>
-            <label>
-              <input type="radio" name="blocking-mode" value="WHITELIST">
-              Whitelist (Block EVERYTHING else)
-            </label>
-          </div>
+        <div class="bottom-actions">
+          <button id="btn-settings" class="text-btn">⚙️ Settings</button>
+          <button id="btn-history" class="text-btn">📊 View History</button>
         </div>
-
-        <div class="settings-section">
-          <h3 id="sites-list-title">Blocked Sites</h3>
-          <div class="add-site-form">
-            <input type="text" id="site-input" placeholder="e.g., tiktok.com" />
-            <button id="btn-add-site" class="primary-btn">Add</button>
-          </div>
-          <ul id="sites-list"></ul>
-          <div class="settings-actions">
-            <button id="btn-reset-sites" class="danger-btn">Reset to Defaults</button>
-            <button id="btn-back-settings" class="secondary-btn">Back</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottom-actions">
-        <button id="btn-settings" class="text-btn">⚙️ Settings</button>
-        <button id="btn-history" class="text-btn">📊 View History</button>
-      </div>
-    </main>
-
-  </div>
-  <script type="module" src="./index.ts"></script>
-</body>
-
+      </main>
+    </div>
+    <script type="module" src="./index.ts"></script>
+  </body>
 </html>
