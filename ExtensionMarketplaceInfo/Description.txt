@@ -19,8 +19,10 @@ Add or remove websites from the block list to match your personal distractions. 
 💾 Privacy-First
 All your data stays on your device. MonoTaskr uses local storage only - no accounts, no servers, no tracking.
 
-✨ Clean & Minimal
 Beautiful, distraction-free interface that stays out of your way. Dark theme by default for comfortable viewing.
+
+🌍 International
+Available in English, French, Spanish, and German. The language is automatically detected based on your browser settings.
 
 Features at a Glance
 ✅ One-click timer start/pause/reset

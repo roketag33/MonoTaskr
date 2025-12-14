@@ -333,7 +333,7 @@ select {
   border: 1px solid var(--border-input);
 }
 
-.day-checkbox input:checked+label {
+.day-checkbox input:checked + label {
   background: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
